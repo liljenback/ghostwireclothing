@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Summit workbook copy & paste helper</title>
+  <!-- bootstrap core css -->
+  <link rel="stylesheet" type="text/css" href="/css/bootstrap.css" />
+  <style>
+    body {
+      padding: 20px;
+    }
+
+    button {
+      float: right;
+    }
+
+    .card {
+      margin-bottom: 20px;
+    }
+  </style>
+  <script>
+    window.exampleJson = JSON.stringify({
+      "data": {
+        "__adobe": {
+          "analytics": {
+            "eVar1": "L612-###",
+            "products": "Washing Machines;1234;1;1600;event3=200;eVar1=ADBE Washing Machine 2000",
+            "events": "event1,event2=2.99,event3:12345,event4=5:2345"
+          },
+          "target": {
+            "cartTotal": "125.99"
+          }
+        }
+      }
+    }, null, 2);
+  </script>
+</head>
+
+<body>
+  <h2>Summit workbook copy & paste helper</h2>
+  <p>Click the copy buttons below to copy each item to your clipboard when they are needed.</p>
+
+  <div class="card w-25">
+    <div class="card-header">
+      Login password
+    </div>
+    <div class="card-body">
+      <button class="btn btn-primary" onclick="navigator.clipboard.writeText('Adobe2024!')">Copy</button>
+      <p>Adobe2024!</p>
+    </div>
+  </div>
+
+  <div class="card w-50">
+    <div class="card-header">
+      Analytics report suite
+    </div>
+    <div class="card-body">
+      <button class="btn btn-primary"
+        onclick="navigator.clipboard.writeText('experienceedgeearlyaccesssummitl612')">Copy</button>
+      <p>experienceedgeearlyaccesssummitl612</p>
+    </div>
+  </div>
+
+  <div class="card w-50">
+    <div class="card-header">
+      Target property token
+    </div>
+    <div class="card-body">
+      <button class="btn btn-primary"
+        onclick="navigator.clipboard.writeText('715cf795-ce15-b3ee-6208-f8df1058c8e8')">Copy</button>
+      <p>715cf795-ce15-b3ee-6208-f8df1058c8e8</p>
+    </div>
+  </div>
+
+  <div class="card w-75">
+    <div class="card-header">
+      Mapping example JSON
+    </div>
+    <div class="card-body">
+      <button class="btn btn-primary" onclick="navigator.clipboard.writeText(window.exampleJson)">Copy</button>
+      <pre>{
+  "data": {
+    "__adobe": {
+      "analytics": {
+          "eVar1": "L612-###",
+          "products": "Washing Machines;1234;1;1600;event3=200;eVar1=ADBE Washing Machine 2000",
+          "events": "event1,event2=2.99,event3:12345,event4=5:2345"
+      },
+      "target": {
+          "cartTotal": "125.99"
+      }
+    }
+  }
+}</pre>
+    </div>
+  </div>
+
+</body>
+
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+{{> head}}
+
+<body class="sub_page">
+  <div class="hero_area">
+    {{> nav active='products'}}
+  </div>
+  <!-- inner page section -->
+  <section class="inner_page_head">
+    <div class="container_fuild">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="full">
+            <h3>Our Products</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- end inner page section -->
+  <!-- product section -->
+  {{> product_cards products=products title=title details=details addToCart=addToCart}}
+  <!-- end product section -->
+
+  {{> footer}}
+</body>
+
+</html>

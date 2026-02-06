@@ -1,0 +1,21 @@
+// Use these values when configuring your Tags Extension
+{
+    "reportSuite": "experienceedgeearlyaccesssummitl612",
+    "targetPropertyID": "715cf795-ce15-b3ee-6208-f8df1058c8e8"
+}
+
+// Use this object when Mapping to XDM
+{
+    "data": {
+        "__adobe": {
+            "analytics": {
+                "eVar1": "L612-###",
+                "products": "Washing Machines;1234;1;1600;event3=200;eVar1=ADBE Washing Machine 2000",
+                "events": "event1,event2=2.99,event3:12345,event4=5:2345"
+            },
+            "target": {
+                "cartTotal": "125.99"
+            }
+        }
+    }
+}

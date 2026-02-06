@@ -1,0 +1,89 @@
+<head>
+  <!-- Basic -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <!-- Mobile Metas -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <!-- Site Metas -->
+  <meta name="keywords" content="" />
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+  <link rel="shortcut icon" href="/images/favicon.png" type="">
+  <title>Ghostwire Clothing</title>
+  <!-- bootstrap core css -->
+  <link rel="stylesheet" type="text/css" href="/css/bootstrap.css" />
+  <!-- font awesome style -->
+  <link href="/css/font-awesome.min.css" rel="stylesheet" />
+  <!-- Custom styles for this template -->
+  <link href="/css/style.css" rel="stylesheet" />
+  <!-- responsive style -->
+  <link href="/css/responsive.css" rel="stylesheet" />
+  <!-- Preconnects -->
+  <link rel="preconnect" href="https://assets.adobedtm.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" />
+  <link rel="preconnect" href="https://experienceedgeearlya.tt.omtrdc.net" />
+  <link rel="preconnect" href="https://edge.adobedc.net" />
+  <script>
+    window.digitalData = {{json digitalData }};
+  </script>
+  <script>
+    // Modified Web SDK prehiding snippet to work for both target and web sdk. (Assuming only one is active at a time.)
+    !function (e, a, n, t) {
+      var i = e.head;
+
+      if (i) {
+        if (a) return;
+        var x = e.createElement("style");
+        x.id = "alloy-prehiding";
+        x.innerText = n;
+        i.appendChild(x);
+
+        var y = e.createElement("style");
+        y.id = "at-body-style";
+        y.innerText = n;
+        i.appendChild(y);
+
+        setTimeout(function () {
+          x.parentNode && x.parentNode.removeChild(x);
+          y.parentNode && y.parentNode.removeChild(y);
+        }, t);
+
+        // When x or y is removed, remove the other.
+        new MutationObserver(function () {
+          if (!x.parentNode || !y.parentNode) {
+            x.parentNode && x.parentNode.removeChild(x);
+            y.parentNode && y.parentNode.removeChild(y);
+            this.disconnect();
+          }
+        }).observe(i, { childList: true });
+      }
+    }(document, document.location.href.indexOf("adobe_authoring_enabled") !== -1, "body { opacity: 0 !important }", 500);
+
+    (function () {
+      /*
+      const addAssuranceToken = function (target, that, args) {
+        const assuranceSessionId = window.localStorage.getItem("assuranceSessionId");
+        const [url, data] = args;
+        const newUrl = assuranceSessionId ? `${url}&adobeAepValidationToken=${assuranceSessionId}` : url;
+        return target.apply(that, [newUrl, data]);
+      };
+
+      window.fetch = new Proxy(window.fetch, {
+        apply: addAssuranceToken
+      });
+      navigator.sendBeacon = new Proxy(navigator.sendBeacon, {
+        apply: addAssuranceToken
+      });
+      */
+      //window.defaultTagsLibrary = "<scr" + "ipt src=\"https://assets.adobedtm.com/22bf1a13013f/af8b0c15e5e5/launch-71eb7cb6afd7-development.min.js\" async></scr" + "ipt>";
+      window.defaultTagsLibrary = "<scr" + "ipt src=\"https://assets.adobedtm.com/d488cb72429b/1bcfcfa531ff/launch-15b9efb66558-development.min.js\" async></scr" + "ipt>";
+
+      const tagsLibrary = window.localStorage.getItem("tagsLibrary") || window.defaultTagsLibrary;
+      const url = /src="([^"]+)"/.exec(tagsLibrary)[1];
+      const tagsScript = document.createElement("script");
+      tagsScript.src = url;
+      tagsScript.async = true;
+      document.head.appendChild(tagsScript);
+    })();
+  </script>
+</head>
