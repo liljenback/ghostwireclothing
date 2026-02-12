@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+
+Disallow: /admin/
+Disallow: /login/
+Disallow: /account/
+Disallow: /checkout/
+Disallow: /cart/
+Disallow: /search?
+
+Sitemap: https://www.ghostwireclothing.com/sitemap.xml

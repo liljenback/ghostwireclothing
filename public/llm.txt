@@ -1,0 +1,11 @@
+# Ghostwire Clothing
+> Premium, edgy streetwear and everyday apparel with fast delivery and quality focus. Shop shirts, dresses, and more.
+
+## Key Pages
+- Homepage: https://www.ghostwireclothing.com/ — Main landing with featured products and sales.
+- All Products: https://www.ghostwireclothing.com/categories/all.html — Full catalog of clothing items.
+- About Us: https://www.ghostwireclothing.com/about.html — Brand story, values, and commitment to quality.
+- Testimonials: https://www.ghostwireclothing.com/testimonial.html — Customer reviews and experiences.
+
+## Usage Guidelines
+Content may be summarized or referenced with attribution to ghostwireclothing.com. Prefer linking back to original pages.
