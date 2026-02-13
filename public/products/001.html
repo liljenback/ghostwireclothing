@@ -29,8 +29,15 @@
     window.digitalData = {"page":"product","siteSection":"Shop","product":{"image":"p1.png","color":"gray","cat1Tag":"mens","cat1Name":"Men's","cat2Tag":"shirts","cat2Name":"Shirts","cat3Tag":"long-sleeve","cat3Name":"Long Sleeve","name":"Classic No Tuck Dress Shirt","price":49.5,"rating":4,"url":"products/001.html","id":"4001"},"cat1Tag":"mens","cat2Tag":"shirts","cat3Tag":"long-sleeve","products":[{"image":"p1.png","color":"gray","cat1Tag":"mens","cat1Name":"Men's","cat2Tag":"shirts","cat2Name":"Shirts","cat3Tag":"long-sleeve","cat3Name":"Long Sleeve","name":"Classic No Tuck Dress Shirt","price":49.5,"rating":4,"url":"products/001.html","id":"4001"}]};
   </script>
   <script>
-    const getServerTimingDescription = (name) => { const nav = performance.getEntriesByType('navigation')[0]; if (!nav?.serverTiming) return null; const entry = nav.serverTiming.find(st => st.name === name); return entry?.description || null; }
-    const getMetaContentValue = (name) => { const meta = document.querySelector(`meta[name="${name}"]`); return meta ? meta.getAttribute('content') : null; } 
+    const getServerTimingDescription = (name) => { const nav = performance.getEntriesByType('navigation')[0]; if (!nav?.serverTiming) return null; const entry = nav.serverTiming.find(st => st.name === name); return entry?.description || null; };
+    const getMetaContentValue = (name) => { const meta = document.querySelector(`meta[name="${name}"]`); return meta ? meta.getAttribute('content') : null; }; 
+    const hasExistingIdentity = (orgId) => {
+      const prefix = `kndctr_${orgId}_AdobeOrg_identity=`;
+      return document.cookie
+        .split(';')
+        .map(c => c.trim())
+        .some(c => c.startsWith(prefix));
+    };
   </script>
   <script>
     // Modified Web SDK prehiding snippet to work for both target and web sdk. (Assuming only one is active at a time.)
