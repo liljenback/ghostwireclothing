@@ -27,6 +27,10 @@
     window.digitalData = {{json digitalData }};
   </script>
   <script>
+    const getServerTimingDescription = (name) => { const nav = performance.getEntriesByType('navigation')[0]; if (!nav?.serverTiming) return null; const entry = nav.serverTiming.find(st => st.name === name); return entry?.description || null; }
+    const getMetaContentValue = (name) => { const meta = document.querySelector(`meta[name="${name}"]`); return meta ? meta.getAttribute('content') : null; } 
+  </script>
+  <script>
     // Modified Web SDK prehiding snippet to work for both target and web sdk. (Assuming only one is active at a time.)
     !function (e, a, n, t) {
       var i = e.head;

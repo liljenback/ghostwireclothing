@@ -29,6 +29,10 @@
     window.digitalData = {"page":"category","siteSection":"Shop","products":[{"image":"p11.png","color":"green","cat1Tag":"mens","cat1Name":"Men's","cat2Tag":"shirts","cat2Name":"Shirts","cat3Tag":"short-sleeve","cat3Name":"Short Sleeve","name":"Classic Plaid Pattern Men's Stylish Short Sleeve Button Up, Summer Holiday Shirt","price":"12.49","rating":3,"url":"products/011.html","id":"4011"}]};
   </script>
   <script>
+    const getServerTimingDescription = (name) => { const nav = performance.getEntriesByType('navigation')[0]; if (!nav?.serverTiming) return null; const entry = nav.serverTiming.find(st => st.name === name); return entry?.description || null; }
+    const getMetaContentValue = (name) => { const meta = document.querySelector(`meta[name="${name}"]`); return meta ? meta.getAttribute('content') : null; } 
+  </script>
+  <script>
     // Modified Web SDK prehiding snippet to work for both target and web sdk. (Assuming only one is active at a time.)
     !function (e, a, n, t) {
       var i = e.head;

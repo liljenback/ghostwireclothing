@@ -29,6 +29,10 @@
     window.digitalData = {"page":"product","siteSection":"Shop","product":{"image":"p4.png","color":"red","cat1Tag":"womens","cat1Name":"Women's","cat2Tag":"dress","cat2Name":"Dress","cat3Tag":"sleeveless","cat3Name":"Sleeveless","name":"Sweetheart Sleeveless Short Tulle Homecoming Dress","price":99,"rating":4,"url":"products/004.html","id":"4004"},"cat1Tag":"womens","cat2Tag":"dress","cat3Tag":"sleeveless","products":[{"image":"p4.png","color":"red","cat1Tag":"womens","cat1Name":"Women's","cat2Tag":"dress","cat2Name":"Dress","cat3Tag":"sleeveless","cat3Name":"Sleeveless","name":"Sweetheart Sleeveless Short Tulle Homecoming Dress","price":99,"rating":4,"url":"products/004.html","id":"4004"}]};
   </script>
   <script>
+    const getServerTimingDescription = (name) => { const nav = performance.getEntriesByType('navigation')[0]; if (!nav?.serverTiming) return null; const entry = nav.serverTiming.find(st => st.name === name); return entry?.description || null; }
+    const getMetaContentValue = (name) => { const meta = document.querySelector(`meta[name="${name}"]`); return meta ? meta.getAttribute('content') : null; } 
+  </script>
+  <script>
     // Modified Web SDK prehiding snippet to work for both target and web sdk. (Assuming only one is active at a time.)
     !function (e, a, n, t) {
       var i = e.head;
