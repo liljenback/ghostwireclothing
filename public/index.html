@@ -89,15 +89,59 @@
         apply: addAssuranceToken
       });
       */
-      window.defaultTagsLibrary = "<scr" + "ipt src=\"https://assets.adobedtm.com/22bf1a13013f/008881430cf7/launch-9d7a41cb948a-development.min.js\" async></scr" + "ipt>";
 
+      window.defaultTagsLibrary = "<scr" + "ipt src=\"https://assets.adobedtm.com/22bf1a13013f/008881430cf7/launch-9d7a41cb948a-development.min.js\" async></scr" + "ipt>";
       const tagsLibrary = window.localStorage.getItem("tagsLibrary") || window.defaultTagsLibrary;
       const url = /src="([^"]+)"/.exec(tagsLibrary)[1];
       const tagsScript = document.createElement("script");
       tagsScript.src = url;
       tagsScript.async = true;
       document.head.appendChild(tagsScript);
+
     })();
+  </script>
+  <script>
+    // Consent management script
+    function getUrlParameter(name) {
+      name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+      var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+      var results = regex.exec(location.search);
+      return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+    }
+
+    var optOutParam = getUrlParameter('opt-out');
+    if (optOutParam !== '') {
+      localStorage.setItem('optOut', optOutParam === 'true');
+    }
+
+    var optOut = localStorage.getItem('optOut') === 'true';
+
+    function setConsent(value) {
+      if (typeof alloy === 'undefined') {
+        console.warn('alloy is not defined');
+        return;
+      }
+      var consentVal = value ? 'n' : 'y';
+      alloy("setConsent", {
+        consent: [{
+          standard: "Adobe",
+          version: "2.0",
+          value: {
+            collect: {
+              val: consentVal
+            },
+            metadata: {
+              time: new Date().toISOString()
+            }
+          }
+        }]
+      });
+      console.log('Consent set to ' + consentVal);
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      setConsent(optOut);
+    });
   </script>
 </head>
 
