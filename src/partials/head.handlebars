@@ -136,8 +136,13 @@
       console.log('Consent set to ' + consentVal);
     }
 
-    document.addEventListener('DOMContentLoaded', function() {
-      setConsent(optOut);
-    });
+    function waitForAlloy() {
+      if (typeof alloy !== 'undefined') {
+        setConsent(optOut);
+      } else {
+        setTimeout(waitForAlloy, 200);
+      }
+    }
+    waitForAlloy();
   </script>
 </head>
