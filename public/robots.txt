@@ -1,0 +1,13 @@
+User-agent: *
+
+Disallow: /admin-panel/
+Disallow: /data-dump/
+Disallow: /login/
+Disallow: /account/
+Disallow: /checkout/
+Disallow: /cart/
+Disallow: /search?  # Blocks search with query parameters
+
+Crawl-delay: 2
+
+Sitemap: https://www.ghostwireclothing.com/sitemap.xml
