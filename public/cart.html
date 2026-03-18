@@ -164,17 +164,8 @@
       }
     })();
 
-    document.addEventListener('DOMContentLoaded', function () {
-      var consentCookie = getCookie('ConsentManagement');
-
-      if (consentCookie) {
-        waitForAlloyThen(function () {
-          setConsent(consentCookie === 'out');
-        });
-        return;
-      }
-
-      // Inject consent modal
+    function ensureConsentModal() {
+      if (document.getElementById('consentModal')) return;
       var modalHtml =
         '<div class="modal fade" id="consentModal" tabindex="-1" role="dialog" aria-labelledby="consentModalLabel" aria-hidden="true">' +
           '<div class="modal-dialog modal-dialog-centered" role="document">' +
@@ -196,11 +187,7 @@
             '</div>' +
           '</div>' +
         '</div>';
-
       document.body.insertAdjacentHTML('beforeend', modalHtml);
-      document.body.classList.add('consent-modal-open');
-
-      $('#consentModal').modal({ backdrop: 'static', keyboard: false });
 
       document.getElementById('consentSaveBtn').addEventListener('click', function () {
         var consented = document.getElementById('consentCheckbox').checked;
@@ -212,6 +199,27 @@
           setConsent(!consented);
         });
       });
+    }
+
+    function openConsentModal() {
+      ensureConsentModal();
+      var currentConsent = getCookie('ConsentManagement');
+      document.getElementById('consentCheckbox').checked = (currentConsent === 'in');
+      document.body.classList.add('consent-modal-open');
+      $('#consentModal').modal({ backdrop: 'static', keyboard: false });
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      var consentCookie = getCookie('ConsentManagement');
+
+      if (consentCookie) {
+        waitForAlloyThen(function () {
+          setConsent(consentCookie === 'out');
+        });
+        return;
+      }
+
+      openConsentModal();
     });
   </script>
 </head>
@@ -499,7 +507,7 @@
               <a href="">
                 <i class="fa fa-envelope" aria-hidden="true"></i>
                 <span>
-                  demo@gmail.com
+                  ghostwireclothing@gmail.com
                 </span>
               </a>
             </div>
@@ -544,6 +552,7 @@
         <div class="col-lg-7 mx-auto px-0">
           <p>
             &copy; <span id="displayYear"></span> All Rights Reserved By Ghostwire Clothing
+            &nbsp;|&nbsp; <a href="#" onclick="openConsentModal(); return false;" style="color: inherit; text-decoration: underline;">Cookie Preferences</a>
           </p>
         </div>
       </div>
