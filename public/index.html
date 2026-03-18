@@ -100,53 +100,120 @@
 
     })();
   </script>
+  <style>
+    body.consent-modal-open > *:not(.modal):not(.modal-backdrop) {
+      filter: blur(3px);
+      user-select: none;
+      pointer-events: none;
+    }
+  </style>
   <script>
-    // Consent management script
-    function getUrlParameter(name) {
-      name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
-      var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
-      var results = regex.exec(location.search);
-      return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+    // Consent management
+    function getCookie(name) {
+      var match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+      return match ? match[2] : null;
     }
 
-    var optOutParam = getUrlParameter('opt-out');
-    if (optOutParam !== '') {
-      localStorage.setItem('optOut', optOutParam === 'true');
+    function setCookie(name, value, days) {
+      var expires = '';
+      if (days) {
+        var date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        expires = '; expires=' + date.toUTCString();
+      }
+      document.cookie = name + '=' + value + expires + '; path=/; SameSite=Lax';
     }
 
-    var optOut = localStorage.getItem('optOut') === 'true';
-
-    function setConsent(value) {
+    function setConsent(optOut) {
       if (typeof alloy === 'undefined') {
         console.warn('alloy is not defined');
         return;
       }
-      var consentVal = value ? 'n' : 'y';
+      var consentVal = optOut ? 'n' : 'y';
       alloy("setConsent", {
         consent: [{
           standard: "Adobe",
           version: "2.0",
           value: {
-            collect: {
-              val: consentVal
-            },
-            metadata: {
-              time: new Date().toISOString()
-            }
+            collect: { val: consentVal },
+            metadata: { time: new Date().toISOString() }
           }
         }]
       });
       console.log('Consent set to ' + consentVal);
     }
 
-    function waitForAlloy() {
+    function waitForAlloyThen(callback) {
       if (typeof alloy !== 'undefined') {
-        setConsent(optOut);
+        callback();
       } else {
-        setTimeout(waitForAlloy, 200);
+        setTimeout(function () { waitForAlloyThen(callback); }, 200);
       }
     }
-    waitForAlloy();
+
+    // URL parameter override
+    (function () {
+      function getUrlParameter(name) {
+        name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+        var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+        var results = regex.exec(location.search);
+        return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+      }
+      var optOutParam = getUrlParameter('opt-out');
+      if (optOutParam !== '') {
+        setCookie('ConsentManagement', optOutParam === 'true' ? 'out' : 'in', 365);
+      }
+    })();
+
+    document.addEventListener('DOMContentLoaded', function () {
+      var consentCookie = getCookie('ConsentManagement');
+
+      if (consentCookie) {
+        waitForAlloyThen(function () {
+          setConsent(consentCookie === 'out');
+        });
+        return;
+      }
+
+      // Inject consent modal
+      var modalHtml =
+        '<div class="modal fade" id="consentModal" tabindex="-1" role="dialog" aria-labelledby="consentModalLabel" aria-hidden="true">' +
+          '<div class="modal-dialog modal-dialog-centered" role="document">' +
+            '<div class="modal-content">' +
+              '<div class="modal-header">' +
+                '<h5 class="modal-title" id="consentModalLabel">Cookie Consent</h5>' +
+              '</div>' +
+              '<div class="modal-body">' +
+                '<p>Help make our product better for you and all users! We collect analytics telemetry\u2014including usage patterns, performance metrics, and diagnostic data\u2014to identify issues, improve features, and enhance your experience.</p>' +
+                '<p>By checking the box below, you consent to this collection, which we process in accordance with GDPR and California privacy laws (CCPA/CPRA). You can withdraw your consent anytime in your account settings. <a href="/privacy-policy.html" target="_blank">Privacy Policy</a></p>' +
+                '<div class="form-check mt-3">' +
+                  '<input class="form-check-input" type="checkbox" id="consentCheckbox">' +
+                  '<label class="form-check-label" for="consentCheckbox">I consent to the collection of analytics telemetry</label>' +
+                '</div>' +
+              '</div>' +
+              '<div class="modal-footer">' +
+                '<button type="button" class="btn btn-primary" id="consentSaveBtn">Save My Preference</button>' +
+              '</div>' +
+            '</div>' +
+          '</div>' +
+        '</div>';
+
+      document.body.insertAdjacentHTML('beforeend', modalHtml);
+      document.body.classList.add('consent-modal-open');
+
+      $('#consentModal').modal({ backdrop: 'static', keyboard: false });
+
+      document.getElementById('consentSaveBtn').addEventListener('click', function () {
+        var consented = document.getElementById('consentCheckbox').checked;
+        var value = consented ? 'in' : 'out';
+        setCookie('ConsentManagement', value, 365);
+        document.body.classList.remove('consent-modal-open');
+        $('#consentModal').modal('hide');
+        waitForAlloyThen(function () {
+          setConsent(!consented);
+        });
+      });
+    });
   </script>
 </head>
 
