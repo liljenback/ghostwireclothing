@@ -161,7 +161,7 @@
       }
       var optOutParam = getUrlParameter('opt-out');
       if (optOutParam !== '') {
-        setCookie('ConsentManagement', optOutParam === 'true' ? 'out' : 'in', 365);
+        setCookie('ConsentStatus', optOutParam === 'true' ? 'out' : 'in', 365);
       }
     })();
 
@@ -193,7 +193,7 @@
       document.getElementById('consentSaveBtn').addEventListener('click', function () {
         var consented = document.getElementById('consentCheckbox').checked;
         var value = consented ? 'in' : 'out';
-        setCookie('ConsentManagement', value, 365);
+        setCookie('ConsentStatus', value, 365);
         document.body.classList.remove('consent-modal-open');
         $('#consentModal').modal('hide');
         waitForAlloyThen(function () {
@@ -204,14 +204,14 @@
 
     function openConsentModal() {
       ensureConsentModal();
-      var currentConsent = getCookie('ConsentManagement');
+      var currentConsent = getCookie('ConsentStatus');
       document.getElementById('consentCheckbox').checked = (currentConsent === 'in');
       document.body.classList.add('consent-modal-open');
       $('#consentModal').modal({ backdrop: 'static', keyboard: false });
     }
 
     document.addEventListener('DOMContentLoaded', function () {
-      var consentCookie = getCookie('ConsentManagement');
+      var consentCookie = getCookie('ConsentStatus');
 
       if (consentCookie) {
         waitForAlloyThen(function () {
