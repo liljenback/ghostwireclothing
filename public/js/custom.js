@@ -46,9 +46,10 @@ function myMap() {
 }
 
 // Set the tags library script in the settings form id=tagsLibrary input
-document.getElementById("tagsLibrary").value = window.localStorage.getItem("tagsLibrary") || defaultTagsLibrary;
-
-//$("#tagsLibraryForm input").val(window.localStorage.getItem("tagsLibrary") || defaultTagsLibrary);
+var tagsLibraryInput = document.getElementById("tagsLibrary");
+if (tagsLibraryInput) {
+  tagsLibraryInput.value = window.localStorage.getItem("tagsLibrary") || defaultTagsLibrary;
+}
 
 $("#navSettings").on("click", function () {
   $("#tagsLibraryForm").toggle();
@@ -62,8 +63,10 @@ $("#tagsLibraryReset").on("click", function (e) {
 
 $("#tagsLibrarySubmit").on("click", function (e) {
   e.preventDefault();
-  //window.localStorage.setItem("tagsLibrary", $("#tagsLibraryForm input").val());
-  window.localStorage.setItem("tagsLibrary", document.getElementById("tagsLibrary").value);
+  var el = document.getElementById("tagsLibrary");
+  if (el) {
+    window.localStorage.setItem("tagsLibrary", el.value);
+  }
   document.location.reload();
 });
 
