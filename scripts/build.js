@@ -4,9 +4,12 @@ const fs = require("fs");
 const path = require("path");
 const Handlebars = require("handlebars");
 const { globSync } = require("glob");
-require("./src/helpers");
-const getData = require("./src/data");
-const products = require("./src/products");
+
+const rootDir = path.resolve(__dirname, "..");
+
+require(path.join(rootDir, "src", "helpers"));
+const getData = require(path.join(rootDir, "src", "data"));
+const products = require(path.join(rootDir, "src", "products"));
 
 require("dotenv").config({ path: path.resolve(process.cwd(), ".env") });
 const {
@@ -36,17 +39,17 @@ const buildFile = (filename, name, variables) => {
   const html = renderTemplate(variables);
 
   // Write to build folder. Copy the built file and deploy
-  fs.writeFile(path.join(__dirname, "public", `${name}.html`), html, (err) => {
+  fs.writeFile(path.join(rootDir, "public", `${name}.html`), html, (err) => {
     if (err) console.log(err);
     console.log(`File written succesfully ${name}.html`);
   });
 };
 
-const partialGlob = path.join(__dirname, "src", "partials", "*.handlebars");
+const partialGlob = path.join(rootDir, "src", "partials", "*.handlebars");
 globSync(partialGlob).forEach((f) => {
   registerPartial(f, path.basename(f, ".handlebars"));
 });
-const srcGlob = path.join(__dirname, "src", "*.handlebars");
+const srcGlob = path.join(rootDir, "src", "*.handlebars");
 globSync(srcGlob).forEach((f) => {
   const name = path.basename(f, ".handlebars");
   if (name !== "product") {
@@ -96,7 +99,7 @@ categoriesList.forEach((category) => {
   }
   usedImages.push(category.image);
   buildFile(
-    path.join(__dirname, "src", "product.handlebars"),
+    path.join(rootDir, "src", "product.handlebars"),
     category.url.substring(0, category.url.length - 5),
     getData({
       name: "category",
@@ -111,7 +114,7 @@ categoriesList.forEach((category) => {
   );
 });
 buildFile(
-  path.join(__dirname, "src", "product.handlebars"),
+  path.join(rootDir, "src", "product.handlebars"),
   "product",
   getData({
     name: "product",
@@ -126,7 +129,7 @@ buildFile(
 );
 products.forEach((product) => {
   buildFile(
-    path.join(__dirname, "src", "product.handlebars"),
+    path.join(rootDir, "src", "product.handlebars"),
     product.url.substring(0, product.url.length - 5),
     getData({
       name: "product",
