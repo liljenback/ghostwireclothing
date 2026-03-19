@@ -174,38 +174,46 @@
               '</div>' +
               '<div class="modal-body">' +
                 '<p>Help make our product better for you and all users! We collect analytics telemetry\u2014including usage patterns, performance metrics, and diagnostic data\u2014to identify issues, improve features, and enhance your experience.</p>' +
-                '<p>By checking the box below, you consent to this collection, which we process in accordance with GDPR and California privacy laws (CCPA/CPRA). You can withdraw your consent anytime in your account settings. <a href="/privacy-policy.html" target="_blank">Privacy Policy</a></p>' +
-                '<div class="form-check mt-3">' +
-                  '<input class="form-check-input" type="checkbox" id="consentCheckbox">' +
-                  '<label class="form-check-label" for="consentCheckbox">I consent to the collection of analytics telemetry</label>' +
-                '</div>' +
+                '<p>Do you consent to the collection of analytics telemetry? You can change your preference anytime via the cookie settings link at the bottom of the page. <a href="/privacy-policy.html" target="_blank">Privacy Policy</a></p>' +
               '</div>' +
               '<div class="modal-footer">' +
-                '<button type="button" class="btn btn-primary" id="consentSaveBtn">Save My Preference</button>' +
+                '<button type="button" class="btn btn-outline-secondary" id="consentNoBtn">No</button>' +
+                '<button type="button" class="btn btn-primary" id="consentYesBtn">Yes</button>' +
               '</div>' +
             '</div>' +
           '</div>' +
         '</div>';
       document.body.insertAdjacentHTML('beforeend', modalHtml);
 
-      document.getElementById('consentSaveBtn').addEventListener('click', function () {
-        var consented = document.getElementById('consentCheckbox').checked;
-        var value = consented ? 'in' : 'out';
-        setCookie('ConsentStatus', value, 365);
+      function handleConsent(consented) {
+        setCookie('ConsentStatus', consented ? 'in' : 'out', 365);
         document.body.classList.remove('consent-modal-open');
         $('#consentModal').modal('hide');
         waitForAlloyThen(function () {
           setConsent(!consented);
         });
+      }
+
+      document.getElementById('consentYesBtn').addEventListener('click', function () {
+        handleConsent(true);
+      });
+
+      document.getElementById('consentNoBtn').addEventListener('click', function () {
+        handleConsent(false);
       });
     }
 
     function openConsentModal() {
       ensureConsentModal();
-      var currentConsent = getCookie('ConsentStatus');
-      document.getElementById('consentCheckbox').checked = (currentConsent === 'in');
       document.body.classList.add('consent-modal-open');
-      $('#consentModal').modal({ backdrop: 'static', keyboard: false });
+      $('#consentModal').modal({ backdrop: true, keyboard: true });
+      $('#consentModal').on('hidden.bs.modal', function () {
+        document.body.classList.remove('consent-modal-open');
+        if (!getCookie('ConsentStatus')) {
+          setCookie('ConsentStatus', 'out', 365);
+          waitForAlloyThen(function () { setConsent(true); });
+        }
+      });
     }
 
     document.addEventListener('DOMContentLoaded', function () {
