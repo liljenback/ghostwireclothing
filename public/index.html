@@ -191,7 +191,9 @@
       function handleConsent(consented) {
         setCookie('ConsentStatus', consented ? 'in' : 'out', 365);
         document.body.classList.remove('consent-modal-open');
-        $('#consentModal').modal('hide');
+        var modalEl = document.getElementById('consentModal');
+        var modal = bootstrap.Modal.getInstance(modalEl);
+        if (modal) modal.hide();
         waitForAlloyThen(function () {
           setConsent(!consented);
         });
@@ -209,14 +211,16 @@
     function openConsentModal() {
       ensureConsentModal();
       document.body.classList.add('consent-modal-open');
-      $('#consentModal').modal({ backdrop: true, keyboard: true });
-      $('#consentModal').on('hidden.bs.modal', function () {
+      var modalEl = document.getElementById('consentModal');
+      var modal = bootstrap.Modal.getOrCreateInstance(modalEl, { backdrop: true, keyboard: true });
+      modalEl.addEventListener('hidden.bs.modal', function () {
         document.body.classList.remove('consent-modal-open');
         if (!getCookie('ConsentStatus')) {
           setCookie('ConsentStatus', 'out', 365);
           waitForAlloyThen(function () { setConsent(true); });
         }
-      });
+      }, { once: true });
+      modal.show();
     }
 
     document.addEventListener('DOMContentLoaded', function () {
@@ -264,11 +268,11 @@
     
       <ul class="nav nav-tabs" id="settingsTab" role="tablist">
         <li class="nav-item">
-          <a class="nav-link active" id="general-tab" data-toggle="tab" data-target="#general" type="button" role="tab"
+          <a class="nav-link active" id="general-tab" data-bs-toggle="tab" data-bs-target="#general" type="button" role="tab"
             aria-controls="general" aria-selected="true">General</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" id="advanced-tab" data-toggle="tab" data-target="#advanced" type="button" role="tab"
+          <a class="nav-link" id="advanced-tab" data-bs-toggle="tab" data-bs-target="#advanced" type="button" role="tab"
             aria-controls="advanced" aria-selected="false">Advanced</a>
         </li>
       </ul>
@@ -284,17 +288,17 @@
     <div class="container">
       <nav class="navbar navbar-expand-lg custom_nav-container ">
         <a class="navbar-brand" href="/index.html"><img width="250" src="/images/logo.png" alt="#" /></a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
           aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class=""> </span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav">
             <li class="nav-item active">
-              <a class="nav-link" href="/index.html">Home <span class="sr-only">(current)</span></a>
+              <a class="nav-link" href="/index.html">Home <span class="visually-hidden">(current)</span></a>
             </li>
             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true"
+              <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" role="button" aria-haspopup="true"
                 aria-expanded="true"> <span class="nav-label">Pages <span class="caret"></span></a>
               <ul class="dropdown-menu">
                 <li><a href="/about.html">About</a></li>
@@ -376,7 +380,7 @@
       <div class="slider_bg_box">
         <img src="images/slider-bg.jpg" loading="lazy" alt="">
       </div>
-      <div id="customCarousel1" class="carousel slide" data-ride="carousel">
+      <div id="customCarousel1" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
           <div class="carousel-item active">
             <div class="container ">
@@ -572,7 +576,7 @@
           Customer's Testimonial
         </h2>
       </div>
-      <div id="carouselExample3Controls" class="carousel slide" data-ride="carousel">
+      <div id="carouselExample3Controls" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
           <div class="carousel-item active">
             <div class="box col-lg-10 mx-auto">
@@ -595,13 +599,13 @@
           </div>
         </div>
         <div class="carousel_btn_box">
-          <a class="carousel-control-prev" href="#carouselExample3Controls" role="button" data-slide="prev">
+          <a class="carousel-control-prev" href="#carouselExample3Controls" role="button" data-bs-slide="prev">
             <i class="fa fa-long-arrow-left" aria-hidden="true"></i>
-            <span class="sr-only">Previous</span>
+            <span class="visually-hidden">Previous</span>
           </a>
-          <a class="carousel-control-next" href="#carouselExample3Controls" role="button" data-slide="next">
+          <a class="carousel-control-next" href="#carouselExample3Controls" role="button" data-bs-slide="next">
             <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
-            <span class="sr-only">Next</span>
+            <span class="visually-hidden">Next</span>
           </a>
         </div>
       </div>
@@ -679,11 +683,8 @@
     </p>
   </div>
   <!-- jQery -->
-  <script src="/js/jquery-3.4.1.min.js"></script>
-  <!-- popper js -->
-  <script src="/js/popper.min.js"></script>
-  <!-- bootstrap js -->
-  <script src="/js/bootstrap.js"></script>
+  <!-- bootstrap bundle js (includes Popper) -->
+  <script src="/js/bootstrap.bundle.min.js"></script>
   <!-- custom js -->
   <script src="/js/custom.js"></script>
 </body>

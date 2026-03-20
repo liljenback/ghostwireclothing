@@ -188,7 +188,9 @@
       function handleConsent(consented) {
         setCookie('ConsentStatus', consented ? 'in' : 'out', 365);
         document.body.classList.remove('consent-modal-open');
-        $('#consentModal').modal('hide');
+        var modalEl = document.getElementById('consentModal');
+        var modal = bootstrap.Modal.getInstance(modalEl);
+        if (modal) modal.hide();
         waitForAlloyThen(function () {
           setConsent(!consented);
         });
@@ -206,14 +208,16 @@
     function openConsentModal() {
       ensureConsentModal();
       document.body.classList.add('consent-modal-open');
-      $('#consentModal').modal({ backdrop: true, keyboard: true });
-      $('#consentModal').on('hidden.bs.modal', function () {
+      var modalEl = document.getElementById('consentModal');
+      var modal = bootstrap.Modal.getOrCreateInstance(modalEl, { backdrop: true, keyboard: true });
+      modalEl.addEventListener('hidden.bs.modal', function () {
         document.body.classList.remove('consent-modal-open');
         if (!getCookie('ConsentStatus')) {
           setCookie('ConsentStatus', 'out', 365);
           waitForAlloyThen(function () { setConsent(true); });
         }
-      });
+      }, { once: true });
+      modal.show();
     }
 
     document.addEventListener('DOMContentLoaded', function () {
