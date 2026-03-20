@@ -4,6 +4,7 @@ const fs = require("fs");
 const path = require("path");
 const Handlebars = require("handlebars");
 const { globSync } = require("glob");
+const sass = require("sass");
 
 const rootDir = path.resolve(__dirname, "..");
 
@@ -143,3 +144,15 @@ products.forEach((product) => {
     })
   );
 });
+
+// Compile SCSS
+const scssInput = path.join(rootDir, "src", "style.scss");
+const cssOutput = path.join(rootDir, "public", "css", "style.css");
+try {
+  const result = sass.compile(scssInput);
+  fs.writeFileSync(cssOutput, result.css);
+  console.log("SCSS compiled successfully to style.css");
+} catch (err) {
+  console.error("SCSS compilation failed:", err.message);
+  process.exit(1);
+}
