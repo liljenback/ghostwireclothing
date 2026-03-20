@@ -55,16 +55,14 @@
         <li class="nav-item{{addClass (eq active 'home') 'active'}}">
           <a class="nav-link" href="/index.html">Home <span class="visually-hidden">(current)</span></a>
         </li>
-        <li class="nav-item dropdown{{addClass (eq active 'pages') 'active'}}">
-          <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" role="button" aria-haspopup="true"
-            aria-expanded="true"> <span class="nav-label">Pages <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="/about.html">About</a></li>
-            <li><a href="/testimonial.html">Testimonial</a></li>
-          </ul>
-        </li>
         <li class="nav-item{{addClass (eq active 'products') 'active'}}">
           <a class="nav-link" href="/categories/all.html">Products</a>
+        </li>
+        <li class="nav-item{{addClass (eq active 'about') 'active'}}">
+          <a class="nav-link" href="/about.html">About</a>
+        </li>
+        <li class="nav-item{{addClass (eq active 'testimonial') 'active'}}">
+          <a class="nav-link" href="/testimonial.html">Testimonials</a>
         </li>
         {{!-- <li class="nav-item{{addClass (eq active 'blog') 'active'}}">
           <a class="nav-link" href="/blog_list.html">Blog</a>
