@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+{{> head}}
+
+<body class="sub_page">
+  <div class="hero_area">
+    {{> nav active=navActive}}
+  </div>
+  <main id="main-content">
+  <!-- inner page section -->
+  <section class="inner_page_head">
+    <div class="container_fuild">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="full">
+            <h1>{{pageTitle}}</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- end inner page section -->
+{{{content}}}
+  </main>
+  {{> footer}}
+</body>
+
+</html>

@@ -1,32 +1,10 @@
 ---
+layout: layouts/subpage.hbs
 permalink: product.html
 pageName: product
+navActive: products
+pageTitle: Our Products
 ---
-<!DOCTYPE html>
-<html lang="en">
-{{> head}}
-
-<body class="sub_page">
-  <div class="hero_area">
-    {{> nav active='products'}}
-  </div>
-  <!-- inner page section -->
-  <section class="inner_page_head">
-    <div class="container_fuild">
-      <div class="row">
-        <div class="col-md-12">
-          <div class="full">
-            <h1>Our Products</h1>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-  <!-- end inner page section -->
   <!-- product section -->
   {{> product_cards products=categories title="Product Categories" details=true addToCart=false}}
   <!-- end product section -->
-  {{> footer}}
-</body>
-
-</html>

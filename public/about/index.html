@@ -1,28 +1,10 @@
+]633;E;{ printf -- '---\\nlayout: layouts/subpage.hbs\\npermalink: about.html\\npageName: about\\nnavActive: about\\npageTitle: About us\\n---\\n'\x3b sed -n '27,311p' src/about.hbs\x3b } > /tmp/about.hbs;997825d0-6213-41b0-a1f2-8f0b7a668be0]633;C---
+layout: layouts/subpage.hbs
+permalink: about.html
+pageName: about
+navActive: about
+pageTitle: About us
 ---
-permalink: blog_list.html
-pageName: blog_list
----
-<!DOCTYPE html>
-<html lang="en">
-{{> head}}
-
-<body class="sub_page">
-  <div class="hero_area">
-    {{> nav active='blog'}}
-  </div>
-  <!-- inner page section -->
-  <section class="inner_page_head">
-    <div class="container_fuild">
-      <div class="row">
-        <div class="col-md-12">
-          <div class="full">
-            <h1>Blog List</h1>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-  <!-- end inner page section -->
   <!-- why section -->
   <section class="why_section layout_padding">
     <div class="container">
@@ -282,7 +264,29 @@ pageName: blog_list
     </div>
   </section>
   <!-- end why section -->
-  {{>footer }}
-</body>
-
-</html>
+  <!-- arrival section -->
+  <section class="arrival_section">
+    <div class="container">
+      <div class="box">
+        <div class="arrival_bg_box">
+          <img src="images/arrival-bg.png" alt="New arrivals collection">
+        </div>
+        <div class="row">
+          <div class="col-md-6 ms-auto">
+            <div class="heading_container remove_line_bt">
+              <h2>
+                #NewArrivals
+              </h2>
+            </div>
+            <p style="margin-top: 20px;margin-bottom: 30px;">
+              Explore our exciting new arrivals featuring the latest fashion trends and timeless classics. Each item is carefully selected to offer comfort, style, and durability for your everyday needs.
+            </p>
+            <a href="/categories/all.html">
+              Shop Now
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- end arrival section -->
