@@ -2,17 +2,17 @@
   "name": "GhostwireClothing",
   "version": "1.0.0",
   "description": "",
-  "main": "scripts/build.js",
+  "main": ".eleventy.js",
   "scripts": {
-    "build": "node scripts/build.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "sandbox": "python -m http.server --directory public"
+    "build": "npx @11ty/eleventy",
+    "serve": "npx @11ty/eleventy --serve",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@11ty/eleventy": "^2.0.1",
     "dotenv": "^16.3.2",
-    "glob": "^10.3.10",
     "handlebars": "^4.7.8",
     "sass": "^1.98.0"
   }

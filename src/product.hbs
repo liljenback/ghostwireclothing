@@ -1,3 +1,7 @@
+---
+permalink: product.html
+pageName: product
+---
 <!DOCTYPE html>
 <html lang="en">
 {{> head}}
@@ -20,7 +24,7 @@
   </section>
   <!-- end inner page section -->
   <!-- product section -->
-  {{> product_cards products=products title=title details=details addToCart=addToCart}}
+  {{> product_cards products=categories title="Product Categories" details=true addToCart=false}}
   <!-- end product section -->
   {{> footer}}
 </body>

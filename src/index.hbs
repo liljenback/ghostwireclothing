@@ -1,3 +1,7 @@
+---
+permalink: index.html
+pageName: index
+---
 <!DOCTYPE html>
 <html lang="en">
 
@@ -51,7 +55,7 @@
         </h2>
       </div>
 
-      {{> product_cards products=products title=title details=details addToCart=addToCart}}
+      {{> product_cards products=featuredProducts details=false addToCart=true}}
 
       <div class="btn-box">
         <a href="/categories/all.html">

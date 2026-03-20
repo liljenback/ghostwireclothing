@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <!-- Basic -->
   <meta charset="utf-8" />
@@ -36,7 +37,7 @@
   <link rel="preconnect" href="https://experienceedgeearlya.tt.omtrdc.net" />
   <link rel="preconnect" href="https://edge.adobedc.net" />
   <script>
-    window.digitalData = {"page":"category","siteSection":"Shop","products":[{"image":"p11.png","color":"green","cat1Tag":"mens","cat1Name":"Men's","cat2Tag":"shirts","cat2Name":"Shirts","cat3Tag":"short-sleeve","cat3Name":"Short Sleeve","name":"Classic Plaid Pattern Men's Stylish Short Sleeve Button Up, Summer Holiday Shirt","price":"12.49","rating":3,"url":"products/011.html","id":"4011"}]};
+    window.digitalData = {"page":"index","siteSection":"Home Page","products":[{"image":"p1.png","color":"gray","cat1Tag":"mens","cat1Name":"Men's","cat2Tag":"shirts","cat2Name":"Shirts","cat3Tag":"long-sleeve","cat3Name":"Long Sleeve","name":"Classic No Tuck Dress Shirt","price":49.5,"rating":4,"url":"products/001.html","id":"4001"},{"image":"p2.png","color":"black","cat1Tag":"mens","cat1Name":"Men's","cat2Tag":"shirts","cat2Name":"Shirts","cat3Tag":"long-sleeve","cat3Name":"Long Sleeve","name":"Multistack Everyday Shirt","price":65,"rating":3,"url":"products/002.html","id":"4002"},{"image":"p3.png","color":"violet","cat1Tag":"womens","cat1Name":"Women's","cat2Tag":"dress","cat2Name":"Dress","cat3Tag":"strapless","cat3Name":"Strapless","name":"A-Line Strapless Chiffon Floor-Length Dress","price":109.99,"rating":5,"url":"products/003.html","id":"4003"},{"image":"p4.png","color":"red","cat1Tag":"womens","cat1Name":"Women's","cat2Tag":"dress","cat2Name":"Dress","cat3Tag":"sleeveless","cat3Name":"Sleeveless","name":"Sweetheart Sleeveless Short Tulle Homecoming Dress","price":99,"rating":4,"url":"products/004.html","id":"4004"}]};
   </script>
   <script>
     const getServerTimingDescription = (name) => { const nav = performance.getEntriesByType('navigation')[0]; if (!nav?.serverTiming) return null; const entry = nav.serverTiming.find(st => st.name === name); return entry?.description || null; };
@@ -247,7 +248,7 @@
   </script>
 </head>
 
-<body class="sub_page">
+<body>
   <div class="hero_area">
     <!-- header section starts -->
     <a class="visually-hidden-focusable" href="#main-content">Skip to main content</a>
@@ -304,10 +305,10 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav">
-            <li class="nav-item">
+            <li class="nav-item active">
               <a class="nav-link" href="/index.html">Home <span class="visually-hidden">(current)</span></a>
             </li>
-            <li class="nav-item active">
+            <li class="nav-item">
               <a class="nav-link" href="/categories/all.html">Products</a>
             </li>
             <li class="nav-item">
@@ -383,119 +384,316 @@
       </nav>
     </div>
     </header>
-    <!-- end header section -->  </div>
-  <!-- inner page section -->
-  <section class="inner_page_head">
-    <div class="container_fuild">
-      <div class="row">
-        <div class="col-md-12">
-          <div class="full">
-            <h1>Our Products</h1>
+    <!-- end header section -->    <!-- slider section -->
+    <section class="slider_section ">
+      <div class="slider_bg_box">
+        <img src="images/slider-bg.jpg" loading="lazy" alt="Sale promotion banner">
+      </div>
+      <div id="customCarousel1" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <div class="container ">
+              <div class="row">
+                <div class="col-md-7 col-lg-6 ">
+                  <div class="detail-box">
+                    <h1>
+                      <span>
+                        Sale 20% Off
+                      </span>
+                      <br>
+                      On Everything
+                    </h1>
+                    <div class="btn-box">
+                      <a href="/categories/all.html" class="btn1">
+                        Shop Now
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </section>
-  <!-- end inner page section -->
+    </section>
+    <!-- end slider section -->
+  </div>
+
+  <main id="main-content">
   <!-- product section -->
   <section class="product_section layout_padding">
     <div class="container">
       <div class="heading_container heading_center">
-        <h2>Short Sleeve</h2>
+        <h2>
+          Our products
+        </h2>
       </div>
-  
-      <div class="row">
-        <div class="col-sm-6 col-md-4 col-lg-3">
-          <div class="box">
-            <div class="option_container">
-              <div class="options">
-                <a href="/products/011.html" class="option1">
-                  Details
-                </a>
-                <button style="padding: 8px 15px; border-radius: 30px; width: 165px; display: inline-block;"
-                  class="addToCart" data-product-index="0">
-                  Add to Cart
-                </button>
+
+      <section class="product_section layout_padding">
+        <div class="container">
+          <div class="heading_container heading_center">
+            <h2></h2>
+          </div>
+      
+          <div class="row">
+            <div class="col-sm-6 col-md-4 col-lg-3">
+              <div class="box">
+                <div class="option_container">
+                  <div class="options">
+                    <button style="padding: 8px 15px; border-radius: 30px; width: 165px; display: inline-block;"
+                      class="addToCart" data-product-index="0">
+                      Add to Cart
+                    </button>
+                  </div>
+                  <div class="spinner-border" style="display: none;"></div>
+                </div>
+                <div class="detail-box">
+                  <h6>
+                    Classic No Tuck Dress Shirt
+                  </h6>
+                </div>
+                <div class="img-box">
+                  <img src="/images/p1.png" alt="Classic No Tuck Dress Shirt">
+                </div>
+                <div class="detail-box">
+                  <h6>
+                    $49.5
+                  </h6>
+                </div>
               </div>
-              <div class="spinner-border" style="display: none;"></div>
             </div>
-            <div class="detail-box">
-              <h6>
-                Classic Plaid Pattern Men&#x27;s Stylish Short Sleeve Button Up, Summer Holiday Shirt
-              </h6>
+            <div class="col-sm-6 col-md-4 col-lg-3">
+              <div class="box">
+                <div class="option_container">
+                  <div class="options">
+                    <button style="padding: 8px 15px; border-radius: 30px; width: 165px; display: inline-block;"
+                      class="addToCart" data-product-index="1">
+                      Add to Cart
+                    </button>
+                  </div>
+                  <div class="spinner-border" style="display: none;"></div>
+                </div>
+                <div class="detail-box">
+                  <h6>
+                    Multistack Everyday Shirt
+                  </h6>
+                </div>
+                <div class="img-box">
+                  <img src="/images/p2.png" alt="Multistack Everyday Shirt">
+                </div>
+                <div class="detail-box">
+                  <h6>
+                    $65
+                  </h6>
+                </div>
+              </div>
             </div>
-            <div class="img-box">
-              <img src="/images/p11.png" alt="Classic Plaid Pattern Men&#x27;s Stylish Short Sleeve Button Up, Summer Holiday Shirt">
+            <div class="col-sm-6 col-md-4 col-lg-3">
+              <div class="box">
+                <div class="option_container">
+                  <div class="options">
+                    <button style="padding: 8px 15px; border-radius: 30px; width: 165px; display: inline-block;"
+                      class="addToCart" data-product-index="2">
+                      Add to Cart
+                    </button>
+                  </div>
+                  <div class="spinner-border" style="display: none;"></div>
+                </div>
+                <div class="detail-box">
+                  <h6>
+                    A-Line Strapless Chiffon Floor-Length Dress
+                  </h6>
+                </div>
+                <div class="img-box">
+                  <img src="/images/p3.png" alt="A-Line Strapless Chiffon Floor-Length Dress">
+                </div>
+                <div class="detail-box">
+                  <h6>
+                    $109.99
+                  </h6>
+                </div>
+              </div>
             </div>
-            <div class="detail-box">
-              <h6>
-                $12.49
-              </h6>
+            <div class="col-sm-6 col-md-4 col-lg-3">
+              <div class="box">
+                <div class="option_container">
+                  <div class="options">
+                    <button style="padding: 8px 15px; border-radius: 30px; width: 165px; display: inline-block;"
+                      class="addToCart" data-product-index="3">
+                      Add to Cart
+                    </button>
+                  </div>
+                  <div class="spinner-border" style="display: none;"></div>
+                </div>
+                <div class="detail-box">
+                  <h6>
+                    Sweetheart Sleeveless Short Tulle Homecoming Dress
+                  </h6>
+                </div>
+                <div class="img-box">
+                  <img src="/images/p4.png" alt="Sweetheart Sleeveless Short Tulle Homecoming Dress">
+                </div>
+                <div class="detail-box">
+                  <h6>
+                    $99
+                  </h6>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="btn-box">
+        <a href="/categories/all.html">
+          View All products
+        </a>
+      </div>
+    </div>
+  </section>
+  <!-- end product section -->
+
+  <!-- subscribe section -->
+  <section class="subscribe_section">
+    <div class="container-fuild">
+      <div class="box">
+        <div class="row">
+          <div class="col-md-6 offset-md-3">
+            <div class="subscribe_form ">
+              <div class="heading_container heading_center">
+                <h2>Subscribe To Get Discount Offers</h2>
+              </div>
+              <form action="">
+                <label for="subscribe-email" class="visually-hidden">Email address</label>
+                <input type="email" id="subscribe-email" placeholder="Enter your email">
+                <button>
+                  subscribe
+                </button>
+              </form>
             </div>
           </div>
         </div>
       </div>
     </div>
   </section>
-  <!-- end product section -->
-  <!-- footer section -->
-  <footer class="footer_section">
+  <!-- end subscribe section -->
+
+  <!-- client section -->
+  <section class="client_section layout_padding">
     <div class="container">
-      <div class="row">
-        <div class="col-md-4 footer-col">
-          <div class="footer_contact">
-            <h4>
-              Reach Us
-            </h4>
-            <div class="contact_link_box">
-              <a href="mailto:ghostwireclothing@gmail.com">
-                <i class="fa-solid fa-envelope" aria-hidden="true"></i>
-                <span>
-                  ghostwireclothing@gmail.com
-                </span>
-              </a>
+      <div class="heading_container heading_center">
+        <h2>
+          Customer's Testimonial
+        </h2>
+      </div>
+      <div id="carouselExample3Controls" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <div class="box col-lg-10 mx-auto">
+              <div class="img_container">
+                <div class="img-box">
+                  <div class="img_box-inner">
+                    <img src="images/client.jpg" loading="lazy" alt="Customer Anna Trevor">
+                  </div>
+                </div>
+              </div>
+              <div class="detail-box">
+                <h5>
+                  Anna Trevor
+                </h5>
+                <h6>
+                  Customer
+                </h6>
+              </div>
             </div>
           </div>
         </div>
-        <div class="col-md-4 footer-col">
-          <div class="footer_detail">
-            <a href="index.html" class="footer-logo">
-              Ghostwire Clothing
-            </a>
-            <p>
-              Discover stylish and comfortable clothing for every occasion. From trendy shirts to elegant dresses, Ghostwire Clothing offers quality fashion that fits your lifestyle.
-            </p>
-            <div class="footer_social">
-              <a href="#" aria-label="Facebook">
-                <i class="fa-brands fa-facebook" aria-hidden="true"></i>
-              </a>
-              <a href="#" aria-label="Twitter">
-                <i class="fa-brands fa-twitter" aria-hidden="true"></i>
-              </a>
-              <a href="#" aria-label="LinkedIn">
-                <i class="fa-brands fa-linkedin" aria-hidden="true"></i>
-              </a>
-              <a href="#" aria-label="Instagram">
-                <i class="fa-brands fa-instagram" aria-hidden="true"></i>
-              </a>
-              <a href="#" aria-label="Pinterest">
-                <i class="fa-brands fa-pinterest" aria-hidden="true"></i>
-              </a>
-            </div>
-          </div>
+        <div class="carousel_btn_box">
+          <a class="carousel-control-prev" href="#carouselExample3Controls" role="button" data-bs-slide="prev">
+            <i class="fa-solid fa-arrow-left-long" aria-hidden="true"></i>
+            <span class="visually-hidden">Previous</span>
+          </a>
+          <a class="carousel-control-next" href="#carouselExample3Controls" role="button" data-bs-slide="next">
+            <i class="fa-solid fa-arrow-right-long" aria-hidden="true"></i>
+            <span class="visually-hidden">Next</span>
+          </a>
         </div>
       </div>
-      <div class="footer-info">
-        <div class="col-lg-7 mx-auto px-0">
-          <p>
-            &copy; <span id="displayYear"></span> All Rights Reserved By Ghostwire Clothing
-            &nbsp;|&nbsp; <a href="#" onclick="openConsentModal(); return false;" style="color: inherit; text-decoration: underline;">Cookie Preferences</a>
-          </p>
+    </div>
+  </section>
+  <!-- end client section -->
+  </main>
+
+  <!-- footer start -->
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="full">
+            <div class="logo_footer">
+              <a href="/index.html"><img width="210" src="images/logo.png" alt="Ghostwire Clothing logo" /></a>
+            </div>
+            <div class="information_f">
+              <p><strong>EMAIL:</strong> ghostwireclothing@gmail.com</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-8">
+          <div class="row">
+            <div class="col-md-7">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="widget_menu">
+                    <h3>Menu</h3>
+                    <ul>
+                      <li><a href="#">Services</a></li>
+                      <li><a href="#">Testimonial</a></li>
+                      <li><a href="#">Contact</a></li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="widget_menu">
+                    <h3>Account</h3>
+                    <ul>
+                      <li><a href="#">Login</a></li>
+                      <li><a href="#">Register</a></li>
+                      <li><a href="#">Shopping</a></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-5">
+              <div class="widget_menu">
+                <h3>Newsletter</h3>
+                <div class="information_f">
+                  <p>Subscribe to our newsletter and get updates daily.</p>
+                </div>
+                <div class="form_sub">
+                  <form>
+                    <fieldset>
+                      <div class="field">
+                        <input type="email" placeholder="Enter Your Mail" name="email" />
+                        <input type="submit" value="Subscribe" />
+                      </div>
+                    </fieldset>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </footer>
-  <!-- footer section -->
+  <!-- footer end -->
+  <div class="cpy_">
+    <p>© 2026 All Rights Reserved By Ghostwire Clothing
+      &nbsp;|&nbsp; <a href="#" onclick="openConsentModal(); return false;" style="color: inherit; text-decoration: underline;">Cookie Preferences</a>
+    </p>
+  </div>
+  <!-- jQery -->
   <!-- bootstrap bundle js (includes Popper) -->
   <script src="/js/bootstrap.bundle.min.js"></script>
   <!-- custom js -->
