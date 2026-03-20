@@ -1,24 +1,52 @@
 # Ghostwire Clothing
 
+A static e-commerce site built with [Eleventy](https://www.11ty.dev/) and Handlebars templates. Styled with Bootstrap 5, Font Awesome 6, and custom SCSS.
+
 ## Install Dependencies
-Website uses handlebar templates to build the site. Install dependencies with:
+
 ```
 npm install
 ```
 
 ## Build
+
 ```
 npm run build
 ```
 
-## Run the website locally
+Generated HTML is written to `public/`, which is the deploy directory.
+
+## Development Server
+
 ```
-npm run sandbox
+npm run serve
+```
+
+Starts Eleventy with live reload.
+
+## Project Structure
+
+```
+src/                  Eleventy input directory
+  *.hbs               Page templates (Handlebars with YAML front matter)
+  _includes/          Partials (head, nav, footer, product_cards, etc.)
+  _data/              Global data (products, categories, env variables)
+  *.11tydata.js       Computed data files (digitalData per page type)
+  style.scss          SCSS source → compiled to public/css/style.css
+  products.js         Product catalog
+public/               Build output & static assets (deploy target)
+  css/                Bootstrap 5, Font Awesome 6, compiled styles
+  js/                 Bootstrap bundle, custom.js (vanilla JS)
+  images/             Product images, logos, backgrounds
+  fonts/              Custom fonts
+  webfonts/           Font Awesome webfonts
+.eleventy.js          Eleventy configuration
 ```
 
 ## Development Tips
-* Modify the handlebars templates in "/src" to update the website. Then build the site to see the changes.
-* You can edit the default Adobe Tags script via "src/partials/head.handlebars"
-* The build script uses "src/products.js" to automatically build category and product pages.
-* You can edit "src/data.js" to create custom datalayers for each page.
-* You can edit the javascript functionality in "public/js/custom.js"
+
+* Edit Handlebars templates in `src/` — run `npm run build` or use `npm run serve` for live reload.
+* Product and category pages are generated automatically from `src/products.js` via Eleventy pagination.
+* Edit `src/_includes/head.hbs` to modify the Adobe Tags script or meta tags.
+* Edit `src/_data/` files to change product data, categories, or environment variables.
+* Edit `public/js/custom.js` for client-side functionality.
