@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <!-- Basic -->
   <meta charset="utf-8" />
@@ -7,9 +7,19 @@
   <!-- Mobile Metas -->
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
   <!-- Site Metas -->
-  <meta name="keywords" content="" />
-  <meta name="description" content="" />
-  <meta name="author" content="" />
+  <meta name="keywords" content="clothing, fashion, shirts, dresses, ghostwire" />
+  <meta name="description" content="Ghostwire Clothing — stylish and comfortable clothing for every occasion. Shop shirts, dresses, and more." />
+  <meta name="author" content="Ghostwire Clothing" />
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Ghostwire Clothing" />
+  <meta property="og:description" content="Stylish and comfortable clothing for every occasion. Shop shirts, dresses, and more." />
+  <meta property="og:image" content="/images/logo.png" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Ghostwire Clothing" />
+  <meta name="twitter:description" content="Stylish and comfortable clothing for every occasion." />
+  <meta name="twitter:image" content="/images/logo.png" />
   <link rel="shortcut icon" href="/images/favicon.png" type="">
   <title>Ghostwire Clothing</title>
   <!-- bootstrap core css -->
@@ -240,6 +250,7 @@
 <body class="sub_page">
   <div class="hero_area">
     <!-- header section starts -->
+    <a class="visually-hidden-focusable" href="#main-content">Skip to main content</a>
     <div id="settingsForm" class="container p-3 my-3 border border-3" style="display:none; position:relative;">
       <script>
         document.addEventListener('keydown', function (event) {
@@ -286,7 +297,7 @@
     </div>
     <div class="container">
       <nav class="navbar navbar-expand-lg custom_nav-container ">
-        <a class="navbar-brand" href="/index.html"><img width="250" src="/images/logo.png" alt="#" /></a>
+        <a class="navbar-brand" href="/index.html"><img width="250" src="/images/logo.png" alt="Ghostwire Clothing logo" /></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
           aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class=""> </span>
@@ -373,13 +384,14 @@
     </div>
     </header>
     <!-- end header section -->  </div>
+  <main id="main-content">
   <!-- inner page section -->
   <section class="inner_page_head">
     <div class="container_fuild">
       <div class="row">
         <div class="col-md-12">
           <div class="full">
-            <h3>Contact us</h3>
+            <h1>Contact us</h1>
           </div>
         </div>
       </div>
@@ -395,10 +407,14 @@
           <div class="full">
             <form action="index.html">
               <fieldset>
-                <input type="text" placeholder="Enter your full name" name="name" required />
-                <input type="email" placeholder="Enter your email address" name="email" required />
-                <input type="text" placeholder="Enter subject" name="subject" required />
-                <textarea placeholder="Enter your message" required></textarea>
+                <label for="contact-name" class="visually-hidden">Full name</label>
+                <input type="text" id="contact-name" placeholder="Enter your full name" name="name" required />
+                <label for="contact-email" class="visually-hidden">Email address</label>
+                <input type="email" id="contact-email" placeholder="Enter your email address" name="email" required />
+                <label for="contact-subject" class="visually-hidden">Subject</label>
+                <input type="text" id="contact-subject" placeholder="Enter subject" name="subject" required />
+                <label for="contact-message" class="visually-hidden">Message</label>
+                <textarea id="contact-message" placeholder="Enter your message" required></textarea>
                 <input type="submit" value="Submit" />
               </fieldset>
             </form>
@@ -413,7 +429,7 @@
     <div class="container">
       <div class="box">
         <div class="arrival_bg_box">
-          <img src="images/arrival-bg.png" alt="">
+          <img src="images/arrival-bg.png" alt="New arrivals collection">
         </div>
         <div class="row">
           <div class="col-md-6 ms-auto">
@@ -425,7 +441,7 @@
             <p style="margin-top: 20px;margin-bottom: 30px;">
               Explore our exciting new arrivals featuring the latest fashion trends and timeless classics. Each item is carefully selected to offer comfort, style, and durability for your everyday needs.
             </p>
-            <a href="">
+            <a href="/categories/all.html">
               Shop Now
             </a>
           </div>
@@ -434,6 +450,7 @@
     </div>
   </section>
   <!-- end arrival section -->
+  </main>
   <!-- footer section -->
   <footer class="footer_section">
     <div class="container">
@@ -462,19 +479,19 @@
               Discover stylish and comfortable clothing for every occasion. From trendy shirts to elegant dresses, Ghostwire Clothing offers quality fashion that fits your lifestyle.
             </p>
             <div class="footer_social">
-              <a href="">
+              <a href="#" aria-label="Facebook">
                 <i class="fa-brands fa-facebook" aria-hidden="true"></i>
               </a>
-              <a href="">
+              <a href="#" aria-label="Twitter">
                 <i class="fa-brands fa-twitter" aria-hidden="true"></i>
               </a>
-              <a href="">
+              <a href="#" aria-label="LinkedIn">
                 <i class="fa-brands fa-linkedin" aria-hidden="true"></i>
               </a>
-              <a href="">
+              <a href="#" aria-label="Instagram">
                 <i class="fa-brands fa-instagram" aria-hidden="true"></i>
               </a>
-              <a href="">
+              <a href="#" aria-label="Pinterest">
                 <i class="fa-brands fa-pinterest" aria-hidden="true"></i>
               </a>
             </div>

@@ -125,9 +125,14 @@ a:focus {
 
 .btn,
 .btn:focus {
-  outline: none !important;
+  outline: 2px solid transparent;
   -webkit-box-shadow: none;
   box-shadow: none;
+}
+
+.btn:focus-visible {
+  outline: 2px solid #0c0c0c;
+  outline-offset: 2px;
 }
 
 /*header section*/
@@ -1003,7 +1008,7 @@ li.nav-item ul li a:focus {
   padding-bottom: 40px;
 }
 
-.inner_page_head h3 {
+.inner_page_head h1 {
   font-size: 42px;
   font-weight: 800;
 }

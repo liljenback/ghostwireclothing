@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 {{> head}}
 
@@ -9,7 +9,7 @@
     <!-- slider section -->
     <section class="slider_section ">
       <div class="slider_bg_box">
-        <img src="images/slider-bg.jpg" loading="lazy" alt="">
+        <img src="images/slider-bg.jpg" loading="lazy" alt="Sale promotion banner">
       </div>
       <div id="customCarousel1" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
@@ -41,14 +41,14 @@
     <!-- end slider section -->
   </div>
 
-
+  <main id="main-content">
   <!-- product section -->
   <section class="product_section layout_padding">
     <div class="container">
       <div class="heading_container heading_center">
-        <h3>
+        <h2>
           Our products
-        </h3>
+        </h2>
       </div>
 
       {{> product_cards products=products title=title details=details addToCart=addToCart}}
@@ -70,10 +70,11 @@
           <div class="col-md-6 offset-md-3">
             <div class="subscribe_form ">
               <div class="heading_container heading_center">
-                <h3>Subscribe To Get Discount Offers</h3>
+                <h2>Subscribe To Get Discount Offers</h2>
               </div>
               <form action="">
-                <input type="email" placeholder="Enter your email">
+                <label for="subscribe-email" class="visually-hidden">Email address</label>
+                <input type="email" id="subscribe-email" placeholder="Enter your email">
                 <button>
                   subscribe
                 </button>
@@ -101,7 +102,7 @@
               <div class="img_container">
                 <div class="img-box">
                   <div class="img_box-inner">
-                    <img src="images/client.jpg" loading="lazy" alt="">
+                    <img src="images/client.jpg" loading="lazy" alt="Customer Anna Trevor">
                   </div>
                 </div>
               </div>
@@ -130,6 +131,7 @@
     </div>
   </section>
   <!-- end client section -->
+  </main>
 
   <!-- footer start -->
   <footer>
@@ -138,7 +140,7 @@
         <div class="col-md-4">
           <div class="full">
             <div class="logo_footer">
-              <a href="#"><img width="210" src="images/logo.png" alt="#" /></a>
+              <a href="/index.html"><img width="210" src="images/logo.png" alt="Ghostwire Clothing logo" /></a>
             </div>
             <div class="information_f">
               <p><strong>EMAIL:</strong> ghostwireclothing@gmail.com</p>

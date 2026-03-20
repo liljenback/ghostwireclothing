@@ -1,18 +1,19 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 {{> head}}
 
 <body class="sub_page">
   <div class="hero_area">
     {{> nav active='contact'}}
   </div>
+  <main id="main-content">
   <!-- inner page section -->
   <section class="inner_page_head">
     <div class="container_fuild">
       <div class="row">
         <div class="col-md-12">
           <div class="full">
-            <h3>Contact us</h3>
+            <h1>Contact us</h1>
           </div>
         </div>
       </div>
@@ -28,10 +29,14 @@
           <div class="full">
             <form action="index.html">
               <fieldset>
-                <input type="text" placeholder="Enter your full name" name="name" required />
-                <input type="email" placeholder="Enter your email address" name="email" required />
-                <input type="text" placeholder="Enter subject" name="subject" required />
-                <textarea placeholder="Enter your message" required></textarea>
+                <label for="contact-name" class="visually-hidden">Full name</label>
+                <input type="text" id="contact-name" placeholder="Enter your full name" name="name" required />
+                <label for="contact-email" class="visually-hidden">Email address</label>
+                <input type="email" id="contact-email" placeholder="Enter your email address" name="email" required />
+                <label for="contact-subject" class="visually-hidden">Subject</label>
+                <input type="text" id="contact-subject" placeholder="Enter subject" name="subject" required />
+                <label for="contact-message" class="visually-hidden">Message</label>
+                <textarea id="contact-message" placeholder="Enter your message" required></textarea>
                 <input type="submit" value="Submit" />
               </fieldset>
             </form>
@@ -46,7 +51,7 @@
     <div class="container">
       <div class="box">
         <div class="arrival_bg_box">
-          <img src="images/arrival-bg.png" alt="">
+          <img src="images/arrival-bg.png" alt="New arrivals collection">
         </div>
         <div class="row">
           <div class="col-md-6 ms-auto">
@@ -58,7 +63,7 @@
             <p style="margin-top: 20px;margin-bottom: 30px;">
               Explore our exciting new arrivals featuring the latest fashion trends and timeless classics. Each item is carefully selected to offer comfort, style, and durability for your everyday needs.
             </p>
-            <a href="">
+            <a href="/categories/all.html">
               Shop Now
             </a>
           </div>
@@ -67,6 +72,7 @@
     </div>
   </section>
   <!-- end arrival section -->
+  </main>
   {{> footer}}
 </body>
 

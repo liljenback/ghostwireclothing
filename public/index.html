@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
   <!-- Basic -->
@@ -8,9 +8,19 @@
   <!-- Mobile Metas -->
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
   <!-- Site Metas -->
-  <meta name="keywords" content="" />
-  <meta name="description" content="" />
-  <meta name="author" content="" />
+  <meta name="keywords" content="clothing, fashion, shirts, dresses, ghostwire" />
+  <meta name="description" content="Ghostwire Clothing — stylish and comfortable clothing for every occasion. Shop shirts, dresses, and more." />
+  <meta name="author" content="Ghostwire Clothing" />
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Ghostwire Clothing" />
+  <meta property="og:description" content="Stylish and comfortable clothing for every occasion. Shop shirts, dresses, and more." />
+  <meta property="og:image" content="/images/logo.png" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Ghostwire Clothing" />
+  <meta name="twitter:description" content="Stylish and comfortable clothing for every occasion." />
+  <meta name="twitter:image" content="/images/logo.png" />
   <link rel="shortcut icon" href="/images/favicon.png" type="">
   <title>Ghostwire Clothing</title>
   <!-- bootstrap core css -->
@@ -241,6 +251,7 @@
 <body>
   <div class="hero_area">
     <!-- header section starts -->
+    <a class="visually-hidden-focusable" href="#main-content">Skip to main content</a>
     <div id="settingsForm" class="container p-3 my-3 border border-3" style="display:none; position:relative;">
       <script>
         document.addEventListener('keydown', function (event) {
@@ -287,7 +298,7 @@
     </div>
     <div class="container">
       <nav class="navbar navbar-expand-lg custom_nav-container ">
-        <a class="navbar-brand" href="/index.html"><img width="250" src="/images/logo.png" alt="#" /></a>
+        <a class="navbar-brand" href="/index.html"><img width="250" src="/images/logo.png" alt="Ghostwire Clothing logo" /></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
           aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class=""> </span>
@@ -376,7 +387,7 @@
     <!-- end header section -->    <!-- slider section -->
     <section class="slider_section ">
       <div class="slider_bg_box">
-        <img src="images/slider-bg.jpg" loading="lazy" alt="">
+        <img src="images/slider-bg.jpg" loading="lazy" alt="Sale promotion banner">
       </div>
       <div id="customCarousel1" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
@@ -408,14 +419,14 @@
     <!-- end slider section -->
   </div>
 
-
+  <main id="main-content">
   <!-- product section -->
   <section class="product_section layout_padding">
     <div class="container">
       <div class="heading_container heading_center">
-        <h3>
+        <h2>
           Our products
-        </h3>
+        </h2>
       </div>
 
       <section class="product_section layout_padding">
@@ -442,7 +453,7 @@
                   </h6>
                 </div>
                 <div class="img-box">
-                  <img src="/images/p1.png" alt="">
+                  <img src="/images/p1.png" alt="Classic No Tuck Dress Shirt">
                 </div>
                 <div class="detail-box">
                   <h6>
@@ -468,7 +479,7 @@
                   </h6>
                 </div>
                 <div class="img-box">
-                  <img src="/images/p2.png" alt="">
+                  <img src="/images/p2.png" alt="Multistack Everyday Shirt">
                 </div>
                 <div class="detail-box">
                   <h6>
@@ -494,7 +505,7 @@
                   </h6>
                 </div>
                 <div class="img-box">
-                  <img src="/images/p3.png" alt="">
+                  <img src="/images/p3.png" alt="A-Line Strapless Chiffon Floor-Length Dress">
                 </div>
                 <div class="detail-box">
                   <h6>
@@ -520,7 +531,7 @@
                   </h6>
                 </div>
                 <div class="img-box">
-                  <img src="/images/p4.png" alt="">
+                  <img src="/images/p4.png" alt="Sweetheart Sleeveless Short Tulle Homecoming Dress">
                 </div>
                 <div class="detail-box">
                   <h6>
@@ -550,10 +561,11 @@
           <div class="col-md-6 offset-md-3">
             <div class="subscribe_form ">
               <div class="heading_container heading_center">
-                <h3>Subscribe To Get Discount Offers</h3>
+                <h2>Subscribe To Get Discount Offers</h2>
               </div>
               <form action="">
-                <input type="email" placeholder="Enter your email">
+                <label for="subscribe-email" class="visually-hidden">Email address</label>
+                <input type="email" id="subscribe-email" placeholder="Enter your email">
                 <button>
                   subscribe
                 </button>
@@ -581,7 +593,7 @@
               <div class="img_container">
                 <div class="img-box">
                   <div class="img_box-inner">
-                    <img src="images/client.jpg" loading="lazy" alt="">
+                    <img src="images/client.jpg" loading="lazy" alt="Customer Anna Trevor">
                   </div>
                 </div>
               </div>
@@ -610,6 +622,7 @@
     </div>
   </section>
   <!-- end client section -->
+  </main>
 
   <!-- footer start -->
   <footer>
@@ -618,7 +631,7 @@
         <div class="col-md-4">
           <div class="full">
             <div class="logo_footer">
-              <a href="#"><img width="210" src="images/logo.png" alt="#" /></a>
+              <a href="/index.html"><img width="210" src="images/logo.png" alt="Ghostwire Clothing logo" /></a>
             </div>
             <div class="information_f">
               <p><strong>EMAIL:</strong> ghostwireclothing@gmail.com</p>
