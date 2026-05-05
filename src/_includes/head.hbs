@@ -41,10 +41,12 @@
     const getMetaContentValue = (name) => { const meta = document.querySelector(`meta[name="${name}"]`); return meta ? meta.getAttribute('content') : null; }; 
     const hasExistingIdentity = (orgId) => {
       const prefix = `kndctr_${orgId}_AdobeOrg_identity=`;
-      return document.cookie
+      let result = document.cookie
         .split(';')
         .map(c => c.trim())
         .some(c => c.startsWith(prefix));
+      console.log(`Has existing identity: ${result}`);
+      return result;
     };
   </script>
   <script>
