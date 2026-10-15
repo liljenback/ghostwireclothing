@@ -133,8 +133,7 @@
         expires = '; expires=' + date.toUTCString();
       }
       var domain = window.location.hostname.split('.').slice(-2).join('.');
-      var domainAttribute = window.location.hostname === 'localhost' || /^[\d.]+$/.test(window.location.hostname) ? '' : '; domain=' + domain;
-      document.cookie = name + '=' + value + expires + '; path=/' + domainAttribute + '; SameSite=Lax';
+      document.cookie = name + '=' + value + expires + '; path=/; domain=' + domain + '; SameSite=Lax';
     }
 
     function setConsent(optOut) {
