@@ -50,3 +50,34 @@ public/               Build output & static assets (deploy target)
 * Edit `src/_includes/head.hbs` to modify the Adobe Tags script or meta tags.
 * Edit `src/_data/` files to change product data, categories, or environment variables.
 * Edit `public/js/custom.js` for client-side functionality.
+
+## Browser Fingerprint Experiment
+
+ThumbmarkJS runs automatically on every storefront page load, independently of
+the analytics consent choice. There is no separate test page or checkbox. The integration
+uses pinned ThumbmarkJS 1.12.0, the free **Open Source** library, not the
+quota-limited **Free API**. No account, API key or subscription is needed.
+
+Inspect `window.thumbmarkResult` or the `[ThumbmarkJS]` message in DevTools.
+No fingerprint output, status panel or other diagnostic UI is added to the page.
+BrowserStack tests can wait for `window.thumbmarkResult` without accepting analytics,
+and read that JavaScript value. Results include the hash, components, timing and any
+component warnings. Browser privacy protections and automation can change hashes.
+This collects browser signals; it does not measure overall site performance.
+
+The existing consent popup and `?opt-out=true` control Adobe analytics only; neither
+blocks fingerprint collection. The original analytics popup is unchanged; the
+privacy policy documents the separate fingerprint experiment.
+Collection runs once per page visit, including restoration from the back/forward cache.
+Leaving clears `window.thumbmarkResult` and discards any pending result.
+Previously logged console output must be cleared in DevTools. The result
+is not saved to browser storage or uploaded by this integration. Thumbmark telemetry
+and collection beacons are disabled, WebRTC is excluded, and no Thumbmark API is
+called. Loading from jsDelivr still sends normal request metadata to the CDN.
+Existing Adobe behavior is unchanged.
+
+Server ingestion and automated uploads are not implemented. Always-on fingerprinting
+can require consent under GDPR/ePrivacy even without uploads; this experiment does not
+establish compliance and needs legal review before public deployment.
+
+Run `node --test tests/thumbmark.test.js` for the focused lifecycle and failure tests.
