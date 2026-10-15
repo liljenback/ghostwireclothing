@@ -133,7 +133,8 @@
         expires = '; expires=' + date.toUTCString();
       }
       var domain = window.location.hostname.split('.').slice(-2).join('.');
-      document.cookie = name + '=' + value + expires + '; path=/; domain=' + domain + '; SameSite=Lax';
+      var domainAttribute = window.location.hostname === 'localhost' || /^[\d.]+$/.test(window.location.hostname) ? '' : '; domain=' + domain;
+      document.cookie = name + '=' + value + expires + '; path=/' + domainAttribute + '; SameSite=Lax';
     }
 
     function setConsent(optOut) {
@@ -247,6 +248,7 @@
       openConsentModal();
     });
   </script>
+  <script src="/js/thumbmark.js" defer></script>
 </head>
 
 <body class="sub_page">
@@ -431,6 +433,8 @@
           <h4 class="mt-4 mb-3">3. Cookies &amp; Analytics</h4>
           <p>We use cookies and analytics tools to collect telemetry data about how visitors interact with our site. This data is used solely to improve your experience and is not sold to third parties.</p>
           <p>When you first visit our site, you will be presented with a consent prompt asking whether you agree to analytics data collection. You can change your preference at any time by clicking the <strong>Cookie Preferences</strong> link in the footer of any page.</p>
+          <p>We run a local browser fingerprint experiment automatically on each page load, independently of your analytics consent choice, using the free, open-source ThumbmarkJS library loaded from jsDelivr. It combines browser signals such as canvas, audio, fonts, graphics, hardware, language and screen settings; WebRTC is excluded. jsDelivr receives your IP address and normal request metadata when the library loads. Thumbmark telemetry and collection beacons are disabled. Fingerprint results stay in page memory and the browser console for testing; they are not saved to browser storage or uploaded by this integration.</p>
+          <p>Choosing <strong>No</strong> in Cookie Preferences applies to analytics, not this local fingerprint experiment. Leaving the page clears its in-memory result. Previously printed console output can be removed using your browser's Clear Console action.</p>
 
           <h4 class="mt-4 mb-3">4. Third-Party Services</h4>
           <p>We may use third-party services (such as Adobe Experience Platform) to process analytics data on our behalf. These services are contractually obligated to handle your data securely and only as instructed by us.</p>
@@ -463,7 +467,6 @@
       </div>
     </div>
   </section>
-
 
   </main>
   <!-- footer section -->

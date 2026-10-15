@@ -131,7 +131,8 @@
         expires = '; expires=' + date.toUTCString();
       }
       var domain = window.location.hostname.split('.').slice(-2).join('.');
-      document.cookie = name + '=' + value + expires + '; path=/; domain=' + domain + '; SameSite=Lax';
+      var domainAttribute = window.location.hostname === 'localhost' || /^[\d.]+$/.test(window.location.hostname) ? '' : '; domain=' + domain;
+      document.cookie = name + '=' + value + expires + '; path=/' + domainAttribute + '; SameSite=Lax';
     }
 
     function setConsent(optOut) {
@@ -245,4 +246,5 @@
       openConsentModal();
     });
   </script>
+  <script src="/js/thumbmark.js" defer></script>
 </head>
