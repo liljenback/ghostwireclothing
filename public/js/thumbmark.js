@@ -6,6 +6,37 @@
   let loading;
   window.thumbmarkResult = null;
 
+  async function uploadClientHints(fingerprint) {
+    const controller = new AbortController();
+    const timeout = setTimeout(function () {
+      controller.abort();
+    }, 10000);
+    try {
+      const response = await fetch("https://www.ghostwireclothing.com/api/client_hints", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(fingerprint),
+        signal: controller.signal
+      });
+      if (!response.ok) {
+        throw new Error("Client signals API returned HTTP " + response.status);
+      }
+      console.log("[ThumbmarkJS] Upload succeeded:", response.status);
+      try {
+        const body = await response.text();
+        if (body.trim()) {
+          console.log("[ThumbmarkJS] API response:", JSON.parse(body));
+        }
+      } catch (error) {
+        console.error("[ThumbmarkJS] API response could not be read:", error);
+      }
+    } catch (error) {
+      console.error("[ThumbmarkJS] Upload failed:", error);
+    } finally {
+      clearTimeout(timeout);
+    }
+  }
+
   function loadThumbmark() {
     if (window.ThumbmarkJS && typeof window.ThumbmarkJS.Thumbmark === "function") {
       return Promise.resolve();
@@ -67,6 +98,7 @@
         console.warn("[ThumbmarkJS] Component warnings:", response.error);
       }
       console.log("[ThumbmarkJS]", response);
+      await uploadClientHints(response);
     } catch (error) {
       if (isCurrent()) {
         window.thumbmarkResult = null;

@@ -71,13 +71,33 @@ privacy policy documents the separate fingerprint experiment.
 Collection runs once per page visit, including restoration from the back/forward cache.
 Leaving clears `window.thumbmarkResult` and discards any pending result.
 Previously logged console output must be cleared in DevTools. The result
-is not saved to browser storage or uploaded by this integration. Thumbmark telemetry
+is not saved to browser storage. Thumbmark telemetry
 and collection beacons are disabled, WebRTC is excluded, and no Thumbmark API is
 called. Loading from jsDelivr still sends normal request metadata to the CDN.
 Existing Adobe behavior is unchanged.
 
-Server ingestion and automated uploads are not implemented. Always-on fingerprinting
-can require consent under GDPR/ePrivacy even without uploads; this experiment does not
-establish compliance and needs legal review before public deployment.
+Each collected result is also POSTed as JSON to
+`https://www.ghostwireclothing.com/api/client_hints`. The payload is the full,
+unmodified Thumbmark response, matching the console result and `window.thumbmarkResult`.
+This includes the original `elapsed` object with all per-component, `_dispatch.*`
+and `_pipeline.*` timings, plus any other returned fields such as `info` and `error`.
+The backend must accept object-shaped `elapsed`, not just a numeric duration.
+Uploads time out after 10 seconds, do not retry automatically,
+and log success or failure with the `[ThumbmarkJS]` prefix. A failed upload does not
+clear `window.thumbmarkResult` or interrupt the storefront.
+Successful JSON responses are logged in full as `[ThumbmarkJS] API response:`,
+including any additional backend fields. Empty responses (such as HTTP 204) are
+accepted without JSON parsing; unreadable responses are reported separately from
+upload failures. The backend response is not substituted for the original fingerprint.
+
+For localhost testing, inspect DevTools **Network** for `client_hints`. The backend
+must allow the localhost origin and the JSON POST preflight through CORS. The site
+does not bypass CORS or proxy failed requests. The endpoint must also allow the
+deployed storefront origin if different from `https://www.ghostwireclothing.com`.
+No authentication headers or cross-origin cookies are added.
+
+Always-on fingerprinting and uploads can require consent under GDPR/ePrivacy;
+this experiment does not establish compliance and needs legal review before
+public deployment. The existing analytics consent popup is unchanged.
 
 Run `node --test tests/thumbmark.test.js` for the focused lifecycle and failure tests.
