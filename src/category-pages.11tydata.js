@@ -1,5 +1,6 @@
 module.exports = {
   eleventyComputed: {
+    productFilters: (data) => data.cat?.tag === "all",
     permalink: (data) => {
       if (!data.cat) return false;
       return `categories/${data.cat.tag}.html`;

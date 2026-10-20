@@ -51,6 +51,26 @@ public/               Build output & static assets (deploy target)
 * Edit `src/_data/` files to change product data, categories, or environment variables.
 * Edit `public/js/custom.js` for client-side functionality.
 
+## Product Search and Filters
+
+Only the All Products page (`/categories/all.html`) includes search and filters.
+It supports case-insensitive search across product names, category names and
+colors, combined with category, color and inclusive min/max price filters.
+All search terms must match. The Products category directory and individual
+category pages remain unchanged.
+
+Results update locally without navigation or a search API. The controls include
+a live result count, an empty state and a Clear filters button. Invalid or reversed
+price ranges show an error and leave the last valid results unchanged.
+Without JavaScript, all product cards and links remain available and the inactive
+filter controls stay hidden. Featured products and individual product pages are
+unchanged. Filtering hides cards without changing their indices, analytics data
+or cart mappings.
+
+Run `node --test tests/product-filters.test.js` for the catalog checks. Browser
+checks use an installed Chrome/Chromium; set `CHROME_BIN` to its executable if it
+is not in a standard location.
+
 ## Browser Fingerprint Experiment
 
 ThumbmarkJS runs automatically on every storefront page load, independently of
@@ -77,9 +97,55 @@ called. Loading from jsDelivr still sends normal request metadata to the CDN.
 Existing Adobe behavior is unchanged.
 
 Each collected result is also POSTed as JSON to
-`https://www.ghostwireclothing.com/api/client_hints`. The payload is the full,
-unmodified Thumbmark response, matching the console result and `window.thumbmarkResult`.
-This includes the original `elapsed` object with all per-component, `_dispatch.*`
+`https://www.ghostwireclothing.com/api/client_hints`. The payload is the full
+Thumbmark response plus `components.custom.webgl`, `components.custom.display`,
+`components.custom.webdriver` and `components.custom.pageContext`, matching the console result and
+`window.thumbmarkResult`. All original Thumbmark fields are preserved; the
+`thumbmark` hash is not recalculated and does not include these custom signals.
+The custom WebGL object contains `supported`, raw unmasked `vendor` and `renderer`,
+and case-insensitive `isSwiftShader` / `isANGLE` matches against the renderer.
+ANGLE and SwiftShader are not mutually exclusive: ANGLE can use SwiftShader.
+These are best-effort string detections, not proof of automation or a particular GPU.
+The WebGL `status` explicitly distinguishes `success`, `unavailable_extension`,
+`no_context` and `error`. If the debug renderer extension is unavailable, vendor/renderer are `null` and
+both match flags are `false` (not detected, rather than ruled out).
+Unavailable WebGL returns `{ supported: false, status: "no_context" }`.
+Collection exceptions return `status: "error"` with an `error` message and log a
+warning without blocking the upload. On error, `supported` is `true` if a context
+was obtained, otherwise `null`. Lost contexts are errors, not missing extensions.
+Browser privacy settings can hide or alter renderer information.
+
+WebGL `capabilities` uses the same context to collect a sorted `extensions` list
+and `limits`: `maxTextureSize`, `maxRenderbufferSize`, and `maxViewportDims` (a
+two-element JSON array). Capabilities have their own `status` (`success` or `error`);
+capability failures log a warning and retain successfully read renderer information.
+Capabilities are attempted even when the debug renderer extension is unavailable.
+
+The custom display object contains `screenWidth`, `screenHeight`, `availableWidth`,
+`availableHeight`, `viewportWidth`, `viewportHeight`, `outerWidth`, `outerHeight`,
+and `devicePixelRatio`. Screen orientation and rotation angle are not collected.
+Dimensions are browser-reported CSS pixels, not physical pixel counts.
+Values are sampled once per collection, including
+back/forward cache restoration, not continuously on resize or rotation.
+Display collection exceptions return `{ error: "..." }` and log a warning without
+blocking other signals or the upload. These values can be affected by zoom, privacy
+protections and browser behavior; they are not proof of automation.
+
+The custom webdriver object contains `value`, read from `navigator.webdriver`:
+`true` or `false` when reported, or `null` when unavailable. Access exceptions
+add an `error` message and log a warning without blocking other signals or the upload.
+This is a browser-reported automation indicator, not conclusive bot detection:
+`false` or `null` does not establish that the browser is not automated.
+
+The custom `pageContext` object contains `hasFocus` and `visibilityState`, sampled
+with the other custom signals. Unavailable APIs return `null`; read exceptions
+return an `error` and log a warning without blocking the upload. This is only a
+snapshot, not a focus/visibility history or a measure of interaction.
+No interaction listeners, typed content, or WebGPU adapter collection are added.
+Custom collectors run after a usable Thumbmark result; if Thumbmark fails or its
+CDN is blocked, no custom payload is uploaded.
+
+The payload includes the original `elapsed` object with all per-component, `_dispatch.*`
 and `_pipeline.*` timings, plus any other returned fields such as `info` and `error`.
 The backend must accept object-shaped `elapsed`, not just a numeric duration.
 Uploads time out after 10 seconds, do not retry automatically,
