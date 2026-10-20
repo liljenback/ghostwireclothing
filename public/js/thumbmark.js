@@ -6,6 +6,100 @@
   let loading;
   window.thumbmarkResult = null;
 
+  function getWebGLCapabilities(gl) {
+    try {
+      const extensions = gl.getSupportedExtensions();
+      if (extensions === null) {
+        throw new Error("WebGL supported extensions could not be read.");
+      }
+      const limits = {
+        maxTextureSize: gl.getParameter(gl.MAX_TEXTURE_SIZE),
+        maxRenderbufferSize: gl.getParameter(gl.MAX_RENDERBUFFER_SIZE),
+        maxViewportDims: Array.from(gl.getParameter(gl.MAX_VIEWPORT_DIMS))
+      };
+      if (gl.isContextLost()) {
+        throw new Error("WebGL context was lost during capability collection.");
+      }
+      return { status: "success", extensions: extensions.sort(), limits };
+    } catch (error) {
+      console.warn("[ThumbmarkJS] Custom WebGL capabilities collection failed:", error);
+      return { status: "error", error: String(error?.message ?? error) };
+    }
+  }
+
+  function getWebGLFingerprint() {
+    let supported = null;
+    try {
+      const canvas = document.createElement("canvas");
+      const gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
+      if (!gl) return { supported: false, status: "no_context" };
+      supported = true;
+      if (gl.isContextLost()) {
+        throw new Error("WebGL context was lost before renderer collection.");
+      }
+
+      const debugInfo = gl.getExtension("WEBGL_debug_renderer_info");
+      const vendor = debugInfo ? gl.getParameter(debugInfo.UNMASKED_VENDOR_WEBGL) : null;
+      const renderer = debugInfo ? gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL) : null;
+      if (gl.isContextLost()) {
+        throw new Error("WebGL context was lost during renderer collection.");
+      }
+      return {
+        supported,
+        status: debugInfo ? "success" : "unavailable_extension",
+        vendor,
+        renderer,
+        isSwiftShader: /swiftshader/i.test(renderer || ""),
+        isANGLE: /angle/i.test(renderer || ""),
+        capabilities: getWebGLCapabilities(gl)
+      };
+    } catch (error) {
+      console.warn("[ThumbmarkJS] Custom WebGL collection failed:", error);
+      return { supported, status: "error", error: String(error?.message ?? error) };
+    }
+  }
+
+  function getDisplaySignals() {
+    try {
+      const s = window.screen;
+      return {
+        screenWidth: s.width,
+        screenHeight: s.height,
+        availableWidth: s.availWidth,
+        availableHeight: s.availHeight,
+        viewportWidth: window.innerWidth,
+        viewportHeight: window.innerHeight,
+        outerWidth: window.outerWidth,
+        outerHeight: window.outerHeight,
+        devicePixelRatio: window.devicePixelRatio
+      };
+    } catch (error) {
+      console.warn("[ThumbmarkJS] Custom display collection failed:", error);
+      return { error: String(error.message || error) };
+    }
+  }
+
+  function getWebdriverSignals() {
+    try {
+      return { value: window.navigator.webdriver ?? null };
+    } catch (error) {
+      console.warn("[ThumbmarkJS] Custom webdriver collection failed:", error);
+      return { value: null, error: String(error.message || error) };
+    }
+  }
+
+  function getPageContext() {
+    try {
+      return {
+        hasFocus: typeof document.hasFocus === "function" ? document.hasFocus() : null,
+        visibilityState: document.visibilityState ?? null
+      };
+    } catch (error) {
+      console.warn("[ThumbmarkJS] Custom page context collection failed:", error);
+      return { error: String(error?.message ?? error) };
+    }
+  }
+
   async function uploadClientHints(fingerprint) {
     const controller = new AbortController();
     const timeout = setTimeout(function () {
@@ -93,12 +187,25 @@
           Object.keys(response.components).length === 0) {
         throw new Error("ThumbmarkJS returned no usable fingerprint or component data.");
       }
-      window.thumbmarkResult = response;
+      const result = {
+        ...response,
+        components: {
+          ...response.components,
+          custom: {
+            ...response.components.custom,
+            webgl: getWebGLFingerprint(),
+            display: getDisplaySignals(),
+            webdriver: getWebdriverSignals(),
+            pageContext: getPageContext()
+          }
+        }
+      };
+      window.thumbmarkResult = result;
       if (response.error && response.error.length) {
         console.warn("[ThumbmarkJS] Component warnings:", response.error);
       }
-      console.log("[ThumbmarkJS]", response);
-      await uploadClientHints(response);
+      console.log("[ThumbmarkJS]", result);
+      await uploadClientHints(result);
     } catch (error) {
       if (isCurrent()) {
         window.thumbmarkResult = null;

@@ -1,12 +1,59 @@
-<section class="product_section layout_padding">
+<section class="product_section layout_padding"{{#if filterable}} data-product-catalog{{/if}}>
   <div class="container">
     <div class="heading_container heading_center">
       <h2>{{title}}</h2>
     </div>
 
+    {{#if filterable}}
+    <form class="product-filters" data-product-filters aria-label="Search and filter products" hidden novalidate>
+      <div class="row g-3 align-items-end">
+        <div class="col-12 col-lg-4">
+          <label for="catalog-search" class="form-label">Search products</label>
+          <input id="catalog-search" class="form-control" type="search" name="search"
+            placeholder="Search by name, category or color">
+        </div>
+        <div class="col-6 col-lg-2">
+          <label for="catalog-category" class="form-label">Category</label>
+          <select id="catalog-category" class="form-select" name="category">
+            <option value="">All categories</option>
+            {{#each categories}}
+            {{#unless (eq tag "all")}}
+            <option value="{{tag}}">{{name}}</option>
+            {{/unless}}
+            {{/each}}
+          </select>
+        </div>
+        <div class="col-6 col-lg-2">
+          <label for="catalog-color" class="form-label">Color</label>
+          <select id="catalog-color" class="form-select" name="color">
+            <option value="">All colors</option>
+          </select>
+        </div>
+        <div class="col-6 col-lg-2">
+          <label for="catalog-min-price" class="form-label">Min price ($)</label>
+          <input id="catalog-min-price" class="form-control" type="number" name="minPrice"
+            min="0" step="0.01" inputmode="decimal" aria-describedby="catalog-price-error">
+        </div>
+        <div class="col-6 col-lg-2">
+          <label for="catalog-max-price" class="form-label">Max price ($)</label>
+          <input id="catalog-max-price" class="form-control" type="number" name="maxPrice"
+            min="0" step="0.01" inputmode="decimal" aria-describedby="catalog-price-error">
+        </div>
+        <div class="col-12">
+          <button class="btn btn-outline-dark" type="button" data-product-reset>Clear filters</button>
+        </div>
+      </div>
+      <p id="catalog-price-error" class="text-danger mt-3 mb-0" role="alert" hidden></p>
+    </form>
+    <p data-product-count role="status" aria-live="polite" aria-atomic="true" hidden></p>
+    <p class="product-empty" data-product-empty hidden>No products match your search and filters. Try another search or clear the filters.</p>
+    {{/if}}
     <div class="row">
       {{#each products}}
-      <div class="col-sm-6 col-md-4 col-lg-3">
+      <div class="col-sm-6 col-md-4 col-lg-3"{{#if ../filterable}} data-product-card
+        data-search="{{name}} {{color}} {{cat1Name}} {{cat2Name}} {{cat3Name}}"
+        data-categories="{{cat1Tag}} {{cat2Tag}} {{cat3Tag}}"
+        data-color="{{color}}" data-price="{{price}}"{{/if}}>
         <div class="box">
           <div class="option_container">
             <div class="options">
