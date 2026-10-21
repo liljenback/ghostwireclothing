@@ -3,7 +3,7 @@ layout: layouts/subpage.hbs
 permalink: contact.html
 pageName: contact
 navActive: contact
-pageTitle: Contact us
+pageTitle: Contact & Feedback
 ---
   <!-- why section -->
   <section class="why_section layout_padding">
@@ -12,19 +12,128 @@ pageTitle: Contact us
       <div class="row">
         <div class="col-lg-8 offset-lg-2">
           <div class="full">
-            <form action="index.html">
-              <fieldset>
-                <label for="contact-name" class="visually-hidden">Full name</label>
-                <input type="text" id="contact-name" placeholder="Enter your full name" name="name" required />
-                <label for="contact-email" class="visually-hidden">Email address</label>
-                <input type="email" id="contact-email" placeholder="Enter your email address" name="email" required />
-                <label for="contact-subject" class="visually-hidden">Subject</label>
-                <input type="text" id="contact-subject" placeholder="Enter subject" name="subject" required />
-                <label for="contact-message" class="visually-hidden">Message</label>
-                <textarea id="contact-message" placeholder="Enter your message" required></textarea>
-                <input type="submit" value="Submit" />
+            <p class="mb-2">Have a question about your order, feedback on a product, or an idea for working together? Tell us more below.</p>
+            <p id="contact-required-note" class="text-muted small mb-4">Fields marked with * are required.</p>
+            <noscript><p class="alert alert-warning">Please enable JavaScript to use the contact form.</p></noscript>
+            <form class="contact-form" data-contact-form action="https://www.ghostwireclothing.com/api/contact" method="post" aria-describedby="contact-required-note">
+              <div id="contact-error-summary" class="alert alert-danger" role="alert" tabindex="-1" hidden></div>
+              <div id="contact-result" class="alert alert-success" role="status" tabindex="-1" hidden></div>
+              <fieldset data-contact-controls disabled>
+                <legend class="visually-hidden">Contact details</legend>
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label for="contact-name" class="form-label">Full name *</label>
+                    <input class="form-control" type="text" id="contact-name" name="name" autocomplete="name" maxlength="200" aria-describedby="contact-name-error" required />
+                    <p id="contact-name-error" class="contact-field-error" data-error-for="name" hidden></p>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label for="contact-email" class="form-label">Email address *</label>
+                    <input class="form-control" type="email" id="contact-email" name="email" autocomplete="email" maxlength="254" aria-describedby="contact-email-error" required />
+                    <p id="contact-email-error" class="contact-field-error" data-error-for="email" hidden></p>
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <label for="contact-inquiry-type" class="form-label">How can we help? *</label>
+                  <select class="form-select" id="contact-inquiry-type" name="inquiryType" aria-describedby="contact-inquiry-type-error" required>
+                    <option value="">Select an inquiry type</option>
+                    <option value="order_issue">Order Issue</option>
+                    <option value="product_feedback">Product Feedback</option>
+                    <option value="return_exchange">Returns &amp; Exchanges</option>
+                    <option value="collaboration">Collaboration Inquiry</option>
+                    <option value="general_inquiry">Other Question</option>
+                  </select>
+                  <p id="contact-inquiry-type-error" class="contact-field-error" data-error-for="inquiryType" hidden></p>
+                </div>
+                <fieldset data-contact-types="order_issue return_exchange" disabled hidden>
+                  <legend class="visually-hidden">Order details</legend>
+                  <div class="mb-3">
+                    <label for="contact-order-number" class="form-label">Order number *</label>
+                    <input class="form-control" type="text" id="contact-order-number" name="orderNumber" placeholder="e.g. GW-1024" maxlength="100" aria-describedby="contact-order-number-error" required />
+                    <p id="contact-order-number-error" class="contact-field-error" data-error-for="orderNumber" hidden></p>
+                  </div>
+                </fieldset>
+                <fieldset data-contact-types="order_issue" disabled hidden>
+                  <legend class="visually-hidden">Order issue</legend>
+                  <div class="mb-3">
+                    <label for="contact-issue-type" class="form-label">What went wrong? *</label>
+                    <select class="form-select" id="contact-issue-type" name="issueType" aria-describedby="contact-issue-type-error" required>
+                      <option value="">Select an issue</option>
+                      <option value="shipping_delay">Shipping delay</option>
+                      <option value="wrong_item">Wrong item</option>
+                      <option value="damaged_item">Damaged item</option>
+                    </select>
+                    <p id="contact-issue-type-error" class="contact-field-error" data-error-for="issueType" hidden></p>
+                  </div>
+                </fieldset>
+                <fieldset data-contact-types="product_feedback" disabled hidden>
+                  <legend class="visually-hidden">Product feedback</legend>
+                  <div class="mb-3">
+                    <label for="contact-product-name" class="form-label">Product name *</label>
+                    <input class="form-control" type="text" id="contact-product-name" name="productName" maxlength="200" aria-describedby="contact-product-name-error" required />
+                    <p id="contact-product-name-error" class="contact-field-error" data-error-for="productName" hidden></p>
+                  </div>
+                  <div class="mb-3">
+                    <label for="contact-rating" class="form-label">Rating *</label>
+                    <select class="form-select" id="contact-rating" name="rating" aria-describedby="contact-rating-error" required>
+                      <option value="">Select a rating</option>
+                      <option value="1">1 - Very dissatisfied</option>
+                      <option value="2">2 - Dissatisfied</option>
+                      <option value="3">3 - Neutral</option>
+                      <option value="4">4 - Satisfied</option>
+                      <option value="5">5 - Very satisfied</option>
+                    </select>
+                    <p id="contact-rating-error" class="contact-field-error" data-error-for="rating" hidden></p>
+                  </div>
+                </fieldset>
+                <fieldset data-contact-types="return_exchange" disabled hidden>
+                  <legend class="visually-hidden">Return or exchange details</legend>
+                  <div class="mb-3">
+                    <label for="contact-return-reason" class="form-label">Reason for return *</label>
+                    <select class="form-select" id="contact-return-reason" name="returnReason" aria-describedby="contact-return-reason-error" required>
+                      <option value="">Select a reason</option>
+                      <option value="wrong_size">Wrong size</option>
+                      <option value="damaged_product">Damaged product</option>
+                      <option value="changed_mind">Changed my mind</option>
+                    </select>
+                    <p id="contact-return-reason-error" class="contact-field-error" data-error-for="returnReason" hidden></p>
+                  </div>
+                  <div class="mb-3">
+                    <label for="contact-preferred-resolution" class="form-label">Preferred resolution *</label>
+                    <select class="form-select" id="contact-preferred-resolution" name="preferredResolution" aria-describedby="contact-preferred-resolution-error" required>
+                      <option value="">Select a resolution</option>
+                      <option value="exchange">Exchange</option>
+                      <option value="refund">Refund</option>
+                    </select>
+                    <p id="contact-preferred-resolution-error" class="contact-field-error" data-error-for="preferredResolution" hidden></p>
+                  </div>
+                </fieldset>
+                <fieldset data-contact-types="collaboration" disabled hidden>
+                  <legend class="visually-hidden">Collaboration details</legend>
+                  <div class="mb-3">
+                    <label for="contact-social-handle" class="form-label">Company name or social handle *</label>
+                    <input class="form-control" type="text" id="contact-social-handle" name="socialHandle" maxlength="200" aria-describedby="contact-social-handle-error" required />
+                    <p id="contact-social-handle-error" class="contact-field-error" data-error-for="socialHandle" hidden></p>
+                  </div>
+                  <div class="mb-3">
+                    <label for="contact-collaboration-type" class="form-label">Collaboration type *</label>
+                    <select class="form-select" id="contact-collaboration-type" name="collaborationType" aria-describedby="contact-collaboration-type-error" required>
+                      <option value="">Select a collaboration type</option>
+                      <option value="influencer">Influencer</option>
+                      <option value="wholesale">Wholesale</option>
+                      <option value="brand_collaboration">Brand collaboration</option>
+                    </select>
+                    <p id="contact-collaboration-type-error" class="contact-field-error" data-error-for="collaborationType" hidden></p>
+                  </div>
+                </fieldset>
+                <div class="mb-4">
+                  <label for="contact-message" class="form-label">Message *</label>
+                  <textarea class="form-control" id="contact-message" name="message" rows="6" maxlength="10000" placeholder="Tell us how we can help" aria-describedby="contact-message-error" required></textarea>
+                  <p id="contact-message-error" class="contact-field-error" data-error-for="message" hidden></p>
+                </div>
+                <button class="btn contact-submit" type="submit">Send message</button>
               </fieldset>
             </form>
+            <script src="/js/contact.js" defer></script>
           </div>
         </div>
       </div>
