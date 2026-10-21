@@ -167,3 +167,69 @@ this experiment does not establish compliance and needs legal review before
 public deployment. The existing analytics consent popup is unchanged.
 
 Run `node --test tests/thumbmark.test.js` for the focused lifecycle and failure tests.
+
+## Contact API
+
+`POST https://www.ghostwireclothing.com/api/contact` accepts JSON with required
+`name`, `email`, `inquiryType`, and `message` fields. It runs in the existing
+`client-hints-api` container in deployment `git-sync-static-site`, namespace
+`ns-team-adc-ghostwire`. The server and contact validator are mounted from
+ConfigMap `client-hints-api`; ConfigMap `nginx-config` proxies the route to
+port 3000. This backend configuration is managed in Kubernetes, not by Eleventy.
+The contact page at `/contact.html` uses this endpoint; `/contact/` redirects
+to it. Edit `src/contact.hbs` for the markup and `public/js/contact.js` for its
+behavior, then rebuild the generated HTML.
+
+| `inquiryType` | Additional required fields |
+|---|---|
+| `order_issue` | `orderNumber`; `issueType`: `shipping_delay`, `wrong_item`, or `damaged_item` |
+| `product_feedback` | `productName`; `rating`: an integer from 1 to 5 |
+| `return_exchange` | `orderNumber`; `returnReason`: `wrong_size`, `damaged_product`, or `changed_mind`; `preferredResolution`: `exchange` or `refund` |
+| `collaboration` | `socialHandle`; `collaborationType`: `influencer`, `wholesale`, or `brand_collaboration` |
+| `general_inquiry` | None |
+
+All fields except `rating` must be non-empty strings. Email must be a valid
+email-shaped address. Fields not belonging to the selected inquiry type,
+including unknown fields and irrelevant fields set to empty or null, are rejected.
+String limits are 200 characters for name, product name, and social handle;
+254 for email; 100 for order number; and 10,000 for message. Request bodies
+are limited to 64 KiB.
+
+Valid requests receive HTTP 201:
+
+```json
+{
+  "success": true,
+  "ticketId": "GW-1792600000000-2d20513a-9f8d-451f-82a8-aa479ee796d5",
+  "status": "received"
+}
+```
+
+The ID combines a millisecond timestamp and a random UUID, not a sequential
+counter. **This is a validation-only acknowledgement:** submissions and ticket
+IDs are not saved, emailed, forwarded, or written to application logs. There is
+no ticket lookup or follow-up processing. Normal infrastructure access logs
+still record request metadata, but the application does not log contact bodies.
+
+Invalid JSON or field validation failures receive HTTP 400 with
+`{"success":false,"error":"VALIDATION_ERROR","fields":{...}}`. Validation is
+entirely server-side, independent of any future form. Non-POST requests receive
+405, unsupported content types 415, and oversized bodies 413.
+
+The form shows common fields for every inquiry and only enables the relevant
+conditional fields. Changing inquiry types clears fields that no longer apply.
+It validates required values, email format, and length limits before sending
+JSON, converts ratings to integers, and displays backend field errors inline.
+Submission controls are disabled while sending to prevent duplicate requests;
+network failures preserve the entered details and allow a manual retry.
+Successful submissions clear the form and display the returned reference ID.
+No contact values are saved to browser storage. JavaScript is required to submit;
+without it, the disabled form cannot accidentally send personal details in a URL.
+
+Run `node --test tests/contact.test.js` for the focused form checks.
+
+```bash
+curl -i https://www.ghostwireclothing.com/api/contact \
+  -H 'Content-Type: application/json' \
+  -d '{"name":"Test User","email":"test@example.com","inquiryType":"return_exchange","orderNumber":"GW-1024","returnReason":"wrong_size","preferredResolution":"exchange","message":"I need a larger size."}'
+```

@@ -1188,6 +1188,51 @@ form input[type="submit"]:focus {
   color: #fff;
 }
 
+.contact-form {
+  fieldset {
+    min-width: 0;
+  }
+
+  .form-label {
+    font-weight: 600;
+  }
+
+  .form-control,
+  .form-select {
+    padding: 12px 15px;
+    margin-bottom: 0;
+    font-size: 16px;
+    text-transform: none;
+  }
+
+  .contact-field-error {
+    margin: 6px 0 0;
+    color: #b42318;
+    font-size: 14px;
+  }
+
+  [aria-invalid="true"] {
+    border-color: #b42318;
+  }
+
+  .contact-submit {
+    padding: 14px 32px;
+    background: #333;
+    color: #fff;
+    font-weight: 600;
+  }
+
+  .contact-submit:hover,
+  .contact-submit:focus-visible {
+    background: #f7444e;
+    color: #fff;
+  }
+
+  [hidden] {
+    display: none !important;
+  }
+}
+
 /** cpy **/
 
 .cpy_ {
