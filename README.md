@@ -176,8 +176,11 @@ Run `node --test tests/thumbmark.test.js` for the focused lifecycle and failure 
 `ns-team-adc-ghostwire`. The server and contact validator are mounted from
 ConfigMap `client-hints-api`; ConfigMap `nginx-config` proxies the route to
 port 3000. This backend configuration is managed in Kubernetes, not by Eleventy.
-The contact page at `/contact.html` uses this endpoint; `/contact/` redirects
-to it. Edit `src/contact.hbs` for the markup and `public/js/contact.js` for its
+The contact page at `/contact.html` posts JSON to the same-origin `/api/contact`
+path, avoiding cross-origin requests between the www and non-www storefronts.
+Local development requires a same-origin API proxy; Eleventy does not provide
+the backend. `/contact/` redirects to `/contact.html`.
+Edit `src/contact.hbs` for the markup and `public/js/contact.js` for its
 behavior, then rebuild the generated HTML.
 
 | `inquiryType` | Additional required fields |

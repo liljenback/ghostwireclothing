@@ -125,7 +125,8 @@ test("browser submits all five inquiry types as JSON and shows the returned refe
       submit();
       await settled();
       const request = requests[requests.length - 1];
-      expect(request.url === "https://www.ghostwireclothing.com/api/contact", "Use the live API URL");
+      expect(form.getAttribute("action") === "/api/contact", "Use a same-origin API path");
+      expect(request.url === new URL("/api/contact", document.baseURI).href, "Resolve the API URL against the page");
       expect(request.options.method === "POST", "Use POST");
       expect(request.options.headers["Content-Type"] === "application/json", "Send JSON");
       equal(request.body, {
@@ -266,6 +267,7 @@ test("without JavaScript the form cannot send personal details through native na
 
 test("generated contact route and directory alias include the new form and canonical destination", () => {
   assert.match(read("public/contact.html"), /data-contact-form/);
+  assert.match(read("public/contact.html"), /action="\/api\/contact" method="post"/);
   assert.match(read("public/contact.html"), /src="\/js\/contact\.js"/);
   assert.doesNotMatch(read("public/contact.html"), /name="subject"|Validation-only demo/);
   assert.match(read("public/contact/index.html"), /http-equiv="refresh" content="0;url=\/contact\.html"/);
