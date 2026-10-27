@@ -1200,6 +1200,24 @@ form input[type=submit]:focus {
   color: #fff;
 }
 
+.newsletter-form .form-check {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-left: 0;
+}
+.newsletter-form .form-check-input {
+  float: none;
+  flex: 0 0 18px;
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  margin: 0;
+}
+.newsletter-form .form-check-label {
+  margin-bottom: 0;
+}
+
 .contact-form fieldset {
   min-width: 0;
 }

@@ -182,6 +182,8 @@ are saved, no existing subscription is fetched and no real mailing list is
 changed. Forms never store email addresses or reasons in browser storage, URLs
 or application logs. Preferences start fresh with monthly frequency; the form
 does not claim these are previously saved preferences.
+The storefront uses neutral acknowledgements rather than technical demo notices;
+these messages do not imply that subscriptions are stored or email is delivered.
 
 Edit `src/newsletter.hbs`, `src/email-preferences.hbs`, `src/unsubscribe.hbs`
 and shared partial `src/_includes/newsletter_form.hbs`. Browser behavior is in
