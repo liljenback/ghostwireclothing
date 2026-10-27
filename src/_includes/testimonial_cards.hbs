@@ -1,0 +1,30 @@
+<section class="testimonials-section layout_padding" aria-labelledby="testimonials-heading">
+  <div class="container">
+    <div class="heading_container heading_center">
+      <h2 id="testimonials-heading">Style, in your words</h2>
+      <p>Everyday favorites and standout pieces, through a personal lens.</p>
+    </div>
+    <div class="row g-4 mt-2">
+      {{#each testimonialFixtures}}
+      <div class="col-md-4">
+        <article class="testimonial-card">
+          <div class="testimonial-rating" role="img" aria-label="{{rating}} out of 5 stars">
+            {{#each stars}}<span{{#unless this}} class="testimonial-star-empty"{{/unless}} aria-hidden="true">&#9733;</span>{{/each}}
+          </div>
+          <h3>{{title}}</h3>
+          <blockquote><p>{{quote}}</p></blockquote>
+          <a class="testimonial-product" href="{{productUrl}}">{{productName}}</a>
+          <div class="testimonial-author">
+            <span class="testimonial-avatar" aria-hidden="true">{{initials}}</span>
+            <div>
+              <p class="testimonial-name">{{name}}</p>
+              {{!-- Visual fixture only; no order-verification system is connected. --}}
+              <span class="testimonial-verified"><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Verified purchase</span>
+            </div>
+          </div>
+        </article>
+      </div>
+      {{/each}}
+    </div>
+  </div>
+</section>
