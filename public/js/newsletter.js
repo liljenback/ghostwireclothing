@@ -20,9 +20,9 @@
     subscribe: "subscribed", preferences: "preferences_updated", unsubscribe: "unsubscribed"
   };
   const confirmations = {
-    subscribe: "Demo subscription confirmed. No subscription was saved and no emails will be sent.",
-    preferences: "Demo preferences confirmed. Your choices were not saved and no email frequency was changed.",
-    unsubscribe: "Demo unsubscription confirmed. No real mailing list was changed."
+    subscribe: "Thank you for your interest in Ghostwire.",
+    preferences: "Thank you for sharing your email preferences.",
+    unsubscribe: "Thank you. Your unsubscribe request has been received."
   };
   let pending = false;
 

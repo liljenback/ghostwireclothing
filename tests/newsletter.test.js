@@ -85,7 +85,7 @@ function runBrowser(action, check, options = {}) {
     const execution = spawnSync(chrome, [
       "--headless", "--disable-background-networking", "--disable-component-update",
       "--disable-extensions", "--disable-sync", "--no-first-run", "--no-default-browser-check",
-      "--user-data-dir=" + path.join(directory, "profile"), "--window-size=390,844",
+      "--user-data-dir=" + path.join(directory, "profile"), "--window-size=" + (options.width || 390) + ",844",
       "--virtual-time-budget=15000", "--dump-dom", pathToFileURL(file).href
     ], { encoding: "utf8", timeout: 30000, maxBuffer: 5 * 1024 * 1024 });
     assert.ifError(execution.error);
@@ -98,7 +98,7 @@ function runBrowser(action, check, options = {}) {
 }
 
 for (const action of ["subscribe", "preferences"]) {
-  test(`browser ${action} submits selected types and reduced frequency with a demo confirmation`, browserOptions, () => {
+  test(`browser ${action} submits selected types and reduced frequency with a confirmation`, browserOptions, () => {
     runBrowser(action, async function () {
       fill();
       category("promotions");
@@ -113,8 +113,8 @@ for (const action of ["subscribe", "preferences"]) {
       expect(requests[0].url === new URL("/api/newsletter", document.baseURI).href, "Use same-origin API");
       expect(requests[0].options.method === "POST", "Use POST");
       expect(requests[0].options.headers["Content-Type"] === "application/json", "Send JSON");
-      expect(!result.hidden && result.textContent.includes("Demo"), "Explicitly simulated");
-      expect(result.textContent.includes("not saved") || result.textContent.includes("No subscription was saved"), "Never imply persistence");
+      expect(!result.hidden && result.textContent.includes("Thank you"), "Acknowledge the request");
+      expect(!/saved|subscribed|emails will be sent/i.test(result.textContent), "Do not claim persistence or delivery");
       expect(document.activeElement === result, "Focus confirmation");
       expect(field("email").value === "", "Clear email after success");
       expect(!form.querySelector('[name="categories"]:checked'), "Clear previous choices after success");
@@ -160,7 +160,7 @@ test("browser unsubscribe supports each reason and requires other text only when
         action: "unsubscribe", email: "newsletter@example.com", reason,
         ...(reason === "other" ? { otherReason: "Different needs" } : {})
       }, "Only relevant fields");
-      expect(!result.hidden && result.textContent.includes("No real mailing list"), "Do not claim real unsubscription");
+      expect(!result.hidden && result.textContent.includes("request has been received"), "Acknowledge the request without claiming removal");
       expect(form.querySelector("[data-newsletter-other]").hidden, "Reset other field");
     }
     fill();
@@ -179,6 +179,27 @@ test("browser unsubscribe supports each reason and requires other text only when
     ));
   });
 });
+
+for (const width of [390, 1280]) {
+  test(`newsletter checkboxes align beside their labels at ${width}px`, browserOptions, () => {
+    runBrowser("subscribe", function () {
+      const inputs = Array.from(form.querySelectorAll('[name="categories"]'));
+      expect(inputs.length === 3, "All email types are available");
+      for (const input of inputs) {
+        const label = form.querySelector('label[for="' + input.id + '"]');
+        const box = input.getBoundingClientRect();
+        const text = label.getBoundingClientRect();
+        expect(box.width >= 16 && box.width <= 24 && Math.abs(box.width - box.height) <= 1,
+          "Checkbox stays compact and square: " + JSON.stringify(box));
+        expect(text.left > box.right && text.left - box.right <= 16, "Label sits beside checkbox");
+        expect(Math.abs((box.top + box.height / 2) - (text.top + text.height / 2)) <= 2,
+          "Checkbox and label are vertically centered");
+        label.click();
+        expect(input.checked, "Label toggles its checkbox");
+      }
+    }, { width });
+  });
+}
 
 test("browser exposes validation and HTTP errors, retains inputs and rejects misleading confirmations", browserOptions, () => {
   runBrowser("preferences", async function () {
@@ -258,7 +279,7 @@ test("generated pages expose subscribe, preferences and all unsubscribe alternat
     const html = read(`public/${page}.html`);
     assert.match(html, /action="\/api\/newsletter" method="post"/);
     assert.match(html, /src="\/js\/newsletter\.js"/);
-    assert.match(html, /Demo only/);
+    assert.doesNotMatch(html, /Demo only|newsletter-demo-note|simulate stopping/);
   }
   const unsubscribe = read("public/unsubscribe.html");
   assert.match(unsubscribe, /href="\/email-preferences\.html#frequency"/);
