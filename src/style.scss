@@ -1188,6 +1188,24 @@ form input[type="submit"]:focus {
   color: #fff;
 }
 
+.newsletter-page .inner_page_head .row {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.newsletter-link {
+  padding: 14px 32px;
+  background: #333;
+  color: #fff;
+  font-weight: 600;
+
+  &:hover,
+  &:focus-visible {
+    background: #f7444e;
+    color: #fff;
+  }
+}
+
 .contact-form {
   fieldset {
     min-width: 0;

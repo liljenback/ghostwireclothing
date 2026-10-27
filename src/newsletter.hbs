@@ -1,0 +1,19 @@
+---
+layout: layouts/subpage.hbs
+permalink: newsletter.html
+pageName: newsletter
+newsletterPage: true
+siteSection: Customer Support
+pageTitle: Join Our Newsletter
+---
+<section class="layout_padding">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 offset-lg-2">
+        <p>Discover the latest Ghostwire styles and choose the updates you want to receive.</p>
+        {{> newsletter_form newsletterAction="subscribe" buttonLabel="Subscribe"}}
+        <p class="mt-4"><a href="/email-preferences.html">Manage email preferences</a> &nbsp;|&nbsp; <a href="/unsubscribe.html">Unsubscribe</a></p>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,26 @@
+---
+layout: layouts/subpage.hbs
+permalink: unsubscribe.html
+pageName: unsubscribe
+newsletterPage: true
+siteSection: Customer Support
+pageTitle: Unsubscribe
+---
+<section class="layout_padding">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 offset-lg-2">
+        <h2 class="h4">Would a different kind of update suit you better?</h2>
+        <p>You can choose fewer emails or just the topics you care about instead of leaving.</p>
+        <div class="d-flex flex-wrap gap-3 mb-4">
+          <a class="btn btn-outline-dark" href="/email-preferences.html#frequency">Reduce email frequency</a>
+          <a class="btn btn-outline-dark" href="/email-preferences.html">Manage email preferences</a>
+        </div>
+        <h2 class="h4">Unsubscribe completely</h2>
+        <p>Enter your email and choose a reason to simulate stopping all newsletter emails.</p>
+        {{> newsletter_form newsletterAction="unsubscribe" buttonLabel="Unsubscribe completely"}}
+        <p class="mt-4">Changed your mind? <a href="/newsletter.html">Subscribe to our newsletter</a>.</p>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,20 @@
+---
+layout: layouts/subpage.hbs
+permalink: email-preferences.html
+pageName: email-preferences
+newsletterPage: true
+siteSection: Customer Support
+pageTitle: Your Email Preferences
+---
+<section class="layout_padding">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 offset-lg-2">
+        <p>Make our updates work for you. Choose the types of emails you want and select monthly to reduce their frequency.</p>
+        {{> newsletter_form newsletterAction="preferences" buttonLabel="Save preferences"}}
+        <p class="mt-4">Prefer to stop all emails? <a href="/unsubscribe.html">Unsubscribe completely</a>.</p>
+        <p>New to Ghostwire? <a href="/newsletter.html">Subscribe to our newsletter</a>.</p>
+      </div>
+    </div>
+  </div>
+</section>
