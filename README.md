@@ -168,6 +168,47 @@ public deployment. The existing analytics consent popup is unchanged.
 
 Run `node --test tests/thumbmark.test.js` for the focused lifecycle and failure tests.
 
+## Newsletter subscription demo
+
+The homepage and footer link to `/newsletter.html`, `/email-preferences.html`
+and `/unsubscribe.html`. Subscribe with an email address, select promotions,
+new collections and/or offers, and choose weekly or monthly updates. The
+unsubscribe page offers all four reasons (too many emails, irrelevant content,
+no longer interested, other), requires a description for other, and links to
+preferences or reduced frequency instead of leaving.
+
+This is explicitly a **stateless simulation**: no emails are sent, no choices
+are saved, no existing subscription is fetched and no real mailing list is
+changed. Forms never store email addresses or reasons in browser storage, URLs
+or application logs. Preferences start fresh with monthly frequency; the form
+does not claim these are previously saved preferences.
+
+Edit `src/newsletter.hbs`, `src/email-preferences.hbs`, `src/unsubscribe.hbs`
+and shared partial `src/_includes/newsletter_form.hbs`. Browser behavior is in
+`public/js/newsletter.js`. Run `npm run build` to update tracked generated pages.
+Forms use the same-origin `POST /api/newsletter` in the Ghostwire backend:
+
+| Action | JSON fields | Confirmation |
+|---|---|---|
+| `subscribe` | `email`, nonempty distinct `categories`, `frequency` | `201`, `subscribed` |
+| `preferences` | `email`, nonempty distinct `categories`, `frequency` | `200`, `preferences_updated` |
+| `unsubscribe` | `email`, `reason`, and `otherReason` only for `other` | `200`, `unsubscribed` |
+
+Category values: `promotions`, `new_collections`, `offers`. Frequency values:
+`weekly`, `monthly`. Reason values: `too_many_emails`, `irrelevant_content`,
+`no_longer_interested`, `other`. Every request includes `action`. Successful
+receipts must include `success: true`, `simulated: true` and the matching status.
+Field errors use the contact API's `400 VALIDATION_ERROR` envelope. Errors
+retain inputs for manual retry; duplicate submissions are blocked while
+pending and requests time out after 10 seconds. With JavaScript disabled the
+forms remain disabled rather than sending personal details via native navigation.
+
+Deploy the backend's updated API and nginx ConfigMaps and restart the service
+before publishing this UI. Eleventy has no backend; local development requires
+a same-origin API proxy. No CORS bypass or API fallback is provided.
+Run `node --test tests/newsletter.test.js` for focused checks; browser cases
+use installed Chrome/Chromium (`CHROME_BIN` overrides the executable).
+
 ## Contact API
 
 `POST https://www.ghostwireclothing.com/api/contact` accepts JSON with required

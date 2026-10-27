@@ -1,0 +1,66 @@
+<p class="alert alert-info" id="newsletter-demo-note">Demo only: no emails are sent and no subscriptions, preferences or reasons are saved. Enter your choices each time; previous choices cannot be loaded.</p>
+<noscript><p class="alert alert-warning">Please enable JavaScript to use this form.</p></noscript>
+<form class="contact-form newsletter-form" data-newsletter-form action="/api/newsletter" method="post" aria-describedby="newsletter-demo-note">
+  <div id="newsletter-error-summary" class="alert alert-danger" role="alert" tabindex="-1" hidden></div>
+  <div id="newsletter-result" class="alert alert-success" role="status" tabindex="-1" hidden></div>
+  <fieldset data-newsletter-controls disabled>
+    <legend class="visually-hidden">{{buttonLabel}}</legend>
+    <input type="hidden" name="action" value="{{newsletterAction}}">
+    <div class="mb-4">
+      <label for="newsletter-email" class="form-label">Email address *</label>
+      <input class="form-control" type="email" id="newsletter-email" name="email" autocomplete="email" maxlength="254" aria-describedby="newsletter-email-error" required>
+      <p id="newsletter-email-error" class="contact-field-error" data-error-for="email" hidden></p>
+    </div>
+    {{#if (eq newsletterAction "unsubscribe")}}
+    <div class="mb-4">
+      <label for="newsletter-reason" class="form-label">Why are you leaving? *</label>
+      <select class="form-select" id="newsletter-reason" name="reason" aria-describedby="newsletter-reason-error" required>
+        <option value="">Select a reason</option>
+        <option value="too_many_emails">Too many emails</option>
+        <option value="irrelevant_content">Irrelevant content</option>
+        <option value="no_longer_interested">No longer interested</option>
+        <option value="other">Other</option>
+      </select>
+      <p id="newsletter-reason-error" class="contact-field-error" data-error-for="reason" hidden></p>
+    </div>
+    <fieldset data-newsletter-other disabled hidden>
+      <legend class="visually-hidden">Other reason</legend>
+      <div class="mb-4">
+        <label for="newsletter-other-reason" class="form-label">Tell us more *</label>
+        <textarea class="form-control" id="newsletter-other-reason" name="otherReason" rows="3" maxlength="1000" aria-describedby="newsletter-other-reason-error" required></textarea>
+        <p id="newsletter-other-reason-error" class="contact-field-error" data-error-for="otherReason" hidden></p>
+      </div>
+    </fieldset>
+    {{else}}
+    <fieldset class="mb-4" aria-describedby="newsletter-categories-note newsletter-categories-error">
+      <legend class="h5">Which emails would you like? *</legend>
+      <p id="newsletter-categories-note" class="text-muted">Choose at least one type.</p>
+      <div class="form-check mb-2">
+        <input class="form-check-input" type="checkbox" id="newsletter-promotions" name="categories" value="promotions" aria-describedby="newsletter-categories-error">
+        <label class="form-check-label" for="newsletter-promotions">Promotions</label>
+      </div>
+      <div class="form-check mb-2">
+        <input class="form-check-input" type="checkbox" id="newsletter-collections" name="categories" value="new_collections" aria-describedby="newsletter-categories-error">
+        <label class="form-check-label" for="newsletter-collections">New collections</label>
+      </div>
+      <div class="form-check mb-2">
+        <input class="form-check-input" type="checkbox" id="newsletter-offers" name="categories" value="offers" aria-describedby="newsletter-categories-error">
+        <label class="form-check-label" for="newsletter-offers">Offers</label>
+      </div>
+      <p id="newsletter-categories-error" class="contact-field-error" data-error-for="categories" hidden></p>
+    </fieldset>
+    <div class="mb-4" id="frequency">
+      <label for="newsletter-frequency" class="form-label">Email frequency *</label>
+      <select class="form-select" id="newsletter-frequency" name="frequency" aria-describedby="newsletter-frequency-note newsletter-frequency-error" required>
+        <option value="monthly">Monthly</option>
+        <option value="weekly">Weekly</option>
+      </select>
+      <p id="newsletter-frequency-note" class="text-muted mt-2">Choose monthly to receive fewer emails.</p>
+      <p id="newsletter-frequency-error" class="contact-field-error" data-error-for="frequency" hidden></p>
+    </div>
+    {{/if}}
+    <p class="text-muted">Fields marked with * are required.</p>
+    <button class="btn contact-submit" type="submit">{{buttonLabel}}</button>
+  </fieldset>
+</form>
+<script src="/js/newsletter.js" defer></script>
