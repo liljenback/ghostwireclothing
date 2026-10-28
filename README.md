@@ -211,6 +211,32 @@ a same-origin API proxy. No CORS bypass or API fallback is provided.
 Run `node --test tests/newsletter.test.js` for focused checks; browser cases
 use installed Chrome/Chromium (`CHROME_BIN` overrides the executable).
 
+## Fashion expert consultation
+
+The homepage and product detail pages include **Schedule a Free Call**. It
+links to `/fashion-consultation.html`, also available in the shared footer.
+The page uses the existing subpage layout and form styling with a native accessible date picker,
+named timezone selector, predefined 20-minute slots (09:00 through 16:40), name,
+email and consultation reason. Same-day past slots are disabled in the selected
+timezone. Labels, keyboard controls, focused field errors and status messages
+support browser-agent interaction. No reschedule or cancel workflow is included.
+
+The form submits same-origin JSON to `POST /api/fashion-consultation` using
+`name`, `email`, `reason`, `date` (`YYYY-MM-DD`), `time` (`HH:mm`) and `timezone`.
+Only a `201` receipt with `success: true`, `status: "request_received"`, a
+contact-style `ticketId` and `durationMinutes: 20` produces confirmation.
+Availability is not connected to a calendar: the UI explicitly acknowledges a
+request, never a guaranteed booking. The confirmation shows a readable preferred
+date/time rather than a technical receipt ID. Like the contact backend, this currently
+sends no email and persists nothing. No new dependencies are required.
+
+Edit `src/fashion-consultation.hbs`, `src/_includes/fashion_consultation.hbs`,
+`src/_includes/fashion_consultation_form.hbs` and
+`public/js/fashion-consultation.js`, then rebuild generated pages with
+`npm run build`. Run `node --test tests/fashion-consultation.test.js` for browser
+coverage. Local preview requires a same-origin proxy for this endpoint; the
+Eleventy development server alone does not provide an API or a CORS bypass.
+
 ## Contact API
 
 `POST https://www.ghostwireclothing.com/api/contact` accepts JSON with required

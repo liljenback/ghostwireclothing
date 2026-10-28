@@ -1314,7 +1314,8 @@ form input[type="submit"]:focus {
   color: #fff;
 }
 
-.newsletter-page .inner_page_head .row {
+.newsletter-page .inner_page_head .row,
+.consultation-page .inner_page_head .row {
   margin-left: 0;
   margin-right: 0;
 }
@@ -1329,6 +1330,39 @@ form input[type="submit"]:focus {
   &:focus-visible {
     background: #f7444e;
     color: #fff;
+  }
+}
+
+.shopping-support {
+  padding: 24px 0;
+  background: #f7f8fa;
+
+  .shopping-support-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    height: 100%;
+    padding: 24px;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    background: #fff;
+  }
+
+  h2 {
+    margin: 0;
+    font-size: 24px;
+  }
+
+  p {
+    margin: 0;
+    color: #595959;
+  }
+
+  .newsletter-link {
+    margin-top: auto;
+    padding: 10px 18px;
+    font-size: 14px;
   }
 }
 
