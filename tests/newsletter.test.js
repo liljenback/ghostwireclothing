@@ -119,6 +119,13 @@ for (const action of ["subscribe", "preferences"]) {
       expect(field("email").value === "", "Clear email after success");
       expect(!form.querySelector('[name="categories"]:checked'), "Clear previous choices after success");
       expect(document.querySelectorAll(".footer_section > .container > .row > .footer-col").length === 3, "Three sibling footer columns");
+      const footer = document.querySelector(".footer_section");
+      expect(!footer.querySelector("form"), "Footer links to signup instead of submitting a disconnected form");
+      expect(footer.querySelector('a[href="/contact.html"]'), "Contact leads to the contact form");
+      let cookiePreferencesOpened = false;
+      window.openConsentModal = function () { cookiePreferencesOpened = true; };
+      footer.querySelector(".footer-cookie-preferences").click();
+      expect(cookiePreferencesOpened, "Cookie preferences remain accessible");
       expect(document.documentElement.scrollWidth <= window.innerWidth, "Fits mobile: " + JSON.stringify(
         Array.from(document.querySelectorAll("*")).filter(element => element.getBoundingClientRect().right > window.innerWidth)
           .slice(0, 5).map(element => [element.tagName, element.className, element.getBoundingClientRect().right])
