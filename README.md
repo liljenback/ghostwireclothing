@@ -71,6 +71,39 @@ Run `node --test tests/product-filters.test.js` for the catalog checks. Browser
 checks use an installed Chrome/Chromium; set `CHROME_BIN` to its executable if it
 is not in a standard location.
 
+## Mouse Tracking Experiment
+
+The shared head loads `/js/mouse-tracking.js` with `defer`, alongside Thumbmark.
+Like the fingerprint experiment, it starts automatically independently of Adobe
+analytics consent, including back/forward-cache restoration. The privacy policy
+discloses this behavior. It records mouse-only changed positions, with 30 ms
+leading/trailing sampling and no minimum-distance threshold. At most 200 points
+are buffered. A gap longer than 30 ms inserts a `resume` anchor at the previous
+position; its time is the observation of resumed movement, not an estimated
+departure time. Speeds across that anchor are `null`, not fabricated.
+
+Every mouse click (excluding keyboard, touch and pen activation) flushes the
+trailing point and POSTs JSON to `https://www.ghostwireclothing.com/api/interactions`.
+`navigator.sendBeacon` sends an `application/json` Blob; rejection, absence or
+exceptions fall back to `fetch` with `keepalive: true`. Delivery is best-effort;
+cross-origin use requires endpoint CORS support, including JSON preflight.
+The interactions endpoint must accept the `type: "mouse_tracking"` payload;
+Thumbmark still uses `/api/client_hints`. No endpoint implementation lives in this repository.
+
+Inspect the latest payload as `window.mouseTrackingResult`. It contains:
+- `type`, `version`, ISO `timestamp`, and the available `thumbmark` hash or `null`.
+- `viewport: { width, height }`, captured at click time.
+- `click: { x, y, t, button, tagName, href }`; tag name is the actual target,
+  while href is resolved from its nearest enclosing link (maximum 2048 characters).
+- `samples: [{ x, y, t, kind, speed }]`, where kind is `move` or `resume`,
+  coordinates are viewport CSS pixels, `t` is milliseconds since activation, and
+  speed is CSS pixels/second or `null` when not measurable.
+- `sampleIntervalMs`, `coordinateSpace`, `speedUnit`, and `droppedSamples`.
+
+The buffer clears after clicks, blur, hidden visibility, resize and pagehide.
+The last result clears on pagehide. No browser storage is used and no click
+default action is blocked. Run `node --test tests/mouse-tracking.test.js`.
+
 ## Browser Fingerprint Experiment
 
 ThumbmarkJS runs automatically on every storefront page load, independently of
